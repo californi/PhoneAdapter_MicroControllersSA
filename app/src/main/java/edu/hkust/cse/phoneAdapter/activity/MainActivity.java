@@ -14,6 +14,7 @@ import android.widget.Toast;
 import edu.hkust.cse.phoneAdapter.R;
 import edu.hkust.cse.phoneAdapter.context.AdaptationManager;
 import edu.hkust.cse.phoneAdapter.context.ContextManager;
+import edu.hkust.cse.phoneAdapter.context.ContextManagerLight;
 
 /**
  * The main activity of PhoneAdapter.
@@ -63,11 +64,25 @@ public class MainActivity extends Activity {
          * (1) ContextManager intentService retrieves sensing data from both logical (e.g., clock) and physical (e.g., GPS) sensors
          * (2) AdaptationManager evaluates active rules upon context change, and triggers the actions specified in the satisfied rule
          */
-        Intent contextManagerIntent=new Intent(this, ContextManager.class);
-        startService(contextManagerIntent);
-        Intent adaptationManagerIntent=new Intent(this, AdaptationManager.class);
-        startService(adaptationManagerIntent);
-        
+		if(getString(R.string.context_manager) == "version1")
+		{
+			Intent contextManagerIntent=new Intent(this, ContextManager.class);
+			startService(contextManagerIntent);
+		}
+		else
+		{
+			Intent contextManagerIntent=new Intent(this, ContextManagerLight.class);
+			startService(contextManagerIntent);
+		}
+
+		if(getString(R.string.adaptation_manager) == "version1")
+		{
+			//
+		}
+		else
+		{
+			//
+		}
     }
     
     @Override

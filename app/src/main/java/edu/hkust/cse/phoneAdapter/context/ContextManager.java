@@ -33,43 +33,24 @@ import edu.hkust.cse.phoneAdapter.activity.MainActivity;
  */
 public class ContextManager extends IntentService {
 	private boolean mGpsAvailable;
-	
 	private String mLocation;
-	
 	private double mSpeed;
-	
 	private ArrayList<String> mBtDeviceList;
-	
 	private String mTime;
-	
 	private String mWeekday;
-	
 	private SimpleDateFormat mTimeFormat;
-	
 	private Calendar mCal;
-	
 	private LocationManager mLocManager;
-	
 	private long mLastTime;
-	
 	private String mLastLocation;
-	
 	private Handler mHandler;
-	
 	private BluetoothAdapter mBtAdapter;
-	
 	private MyBroadcastReceiver mReceiver;
-	
 	private boolean mStop;
-	
 	private static final String TAG = "PhoneAdapterContextLog";
-	
 	private BufferedWriter bw;
-	
 	private BufferedWriter bwService;
-	
 	private LocationListener mLocListener;
-	
 	private static boolean running;
 	
 	/**
