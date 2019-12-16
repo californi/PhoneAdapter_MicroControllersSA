@@ -7,6 +7,8 @@ package edu.hkust.cse.phoneAdapter.context;
 public interface ContextName {
 	
 	public static final String GPS_AVAILABLE="GpsAvailable";
+
+	public static final String BT_AVAILABLE="BTAvailable";
 	
 	public static final String GPS_LOCATION="GpsLocation";
 	

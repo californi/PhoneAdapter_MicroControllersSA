@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="adaptation_manager">version1</string>
-    <string name="context_manager">version1</string>
     <string name="hello">Welcome to PhoneAdapter!</string>
     <string name="app_name">PhoneAdapter</string>
     <string name="main_btn_create_profiles">Create Profile</string>

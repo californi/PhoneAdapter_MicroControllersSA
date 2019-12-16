@@ -29,7 +29,6 @@
         <item>9</item>
     </string-array>
     <color name="grey">#FF909090</color>
-    <string name="adaptation_manager">version1</string>
     <string name="add_filter_btn_text">Add Filter</string>
     <string name="airplane_mode">Airplane Mode</string>
     <string name="app_name">PhoneAdapter</string>
@@ -41,7 +40,6 @@
     <string name="choose_priority">Choose Priority</string>
     <string name="choose_state">Choose a state</string>
     <string name="confirm">Confirm</string>
-    <string name="context_manager">version1</string>
     <string name="context_operator">Operator</string>
     <string name="context_operator_prompt">Choose One Operator</string>
     <string name="context_variable_type">Context Type</string>

@@ -4,17 +4,16 @@ package edu.hkust.cse.phoneAdapter.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
+
 import edu.hkust.cse.phoneAdapter.R;
 import edu.hkust.cse.phoneAdapter.context.AdaptationManager;
-import edu.hkust.cse.phoneAdapter.context.ContextManager;
-import edu.hkust.cse.phoneAdapter.context.ContextManagerLight;
+import edu.hkust.cse.phoneAdapter.context.ContextManagerComplete;
+import edu.hkust.cse.phoneAdapter.context.MetaController;
 
 /**
  * The main activity of PhoneAdapter.
@@ -64,25 +63,11 @@ public class MainActivity extends Activity {
          * (1) ContextManager intentService retrieves sensing data from both logical (e.g., clock) and physical (e.g., GPS) sensors
          * (2) AdaptationManager evaluates active rules upon context change, and triggers the actions specified in the satisfied rule
          */
-		if(getString(R.string.context_manager) == "version1")
-		{
-			Intent contextManagerIntent=new Intent(this, ContextManager.class);
-			startService(contextManagerIntent);
-		}
-		else
-		{
-			Intent contextManagerIntent=new Intent(this, ContextManagerLight.class);
-			startService(contextManagerIntent);
-		}
 
-		if(getString(R.string.adaptation_manager) == "version1")
-		{
-			//
-		}
-		else
-		{
-			//
-		}
+        // METACONTROLLER HERE
+		Intent metaControllerIntent=new Intent(this, MetaController.class);
+		startService(metaControllerIntent);
+
     }
     
     @Override
@@ -187,9 +172,9 @@ public class MainActivity extends Activity {
    }  
     
    private void startService(){
-	   if(!ContextManager.isRunning()){
-		   Intent contextManagerIntent=new Intent(this, ContextManager.class);
-	       startService(contextManagerIntent);
+	   if(!MetaController.isRunning()){
+		   Intent metaControllerIntent=new Intent(this, MetaController.class);
+	       startService(metaControllerIntent);
 	   }
 	   if(!AdaptationManager.isRunning()){
 		   Intent adaptationManagerIntent=new Intent(this, AdaptationManager.class);
@@ -198,7 +183,7 @@ public class MainActivity extends Activity {
    }
    
    private void stopService(){
-	   if(ContextManager.isRunning() || AdaptationManager.isRunning()){
+	   if(MetaController.isRunning() || AdaptationManager.isRunning()){
 		   /* stop the ContextManager and Adaptation Manager service before destroying the main activity */
 	    	Intent i=new Intent("edu.hkust.cse.phoneAdapter.stopService");
 	    	sendBroadcast(i);
