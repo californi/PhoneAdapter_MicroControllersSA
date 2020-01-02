@@ -91,11 +91,15 @@ public class MetaController extends IntentService {
                 if(gpsAvailable && !btAvailable) {
                     Intent contextManagerNoBluetoothIntent = new Intent(c, ContextManagerNoBluetooth.class);
                     startService(contextManagerNoBluetoothIntent);
+                if(!gpsAvailable && btAvailable){
+                    Intent contextManagerNoGPSIntent = new Intent(c, ContextManagerNoGPS.class);
+                    startService(contextManagerNoGPSIntent);
+                }
                 }else if(!gpsAvailable && !btAvailable) {
-                    Intent contextManagerNoBluetoothNoGPS = new Intent(c, ContextManagerNoBluetoothNoGPS.class);
-                    startService(contextManagerNoBluetoothNoGPS);
+                    Intent contextManagerNoBluetoothNoGPSIntent = new Intent(c, ContextManagerNoBluetoothNoGPS.class);
+                    startService(contextManagerNoBluetoothNoGPSIntent);
                 }else{
-                    Intent contextManagerCompleteIntent = new Intent(c, ContextManagerComplete.class);
+                    Intent contextManagerCompleteIntent = new Intent(c, ContextManagerAllSensors.class);
                     startService(contextManagerCompleteIntent);
                 }
             }

@@ -27,7 +27,7 @@
 15-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:10:22-78
 16
 17    <application
-17-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:12:5-31:19
+17-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:12:5-36:19
 18        android:debuggable="true"
 19        android:icon="@drawable/icon"
 19-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:12:18-47
@@ -109,12 +109,27 @@
 58            android:label="@string/search_save_device_activity_label" />
 58-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:19-76
 59
-60        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManager" />
-60-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:9-67
-60-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:18-56
-61        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManager" />
-61-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:30:9-70
-61-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:30:18-59
-62    </application>
-63
-64</manifest>
+60        <service android:name="edu.hkust.cse.phoneAdapter.context.KnowledgeController" />
+60-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:9-72
+60-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:18-61
+61        <service android:name="edu.hkust.cse.phoneAdapter.context.MetaController" />
+61-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:30:9-67
+61-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:30:18-56
+62        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerAllSensors" />
+62-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:9-77
+62-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:18-66
+63        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetooth" />
+63-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:9-78
+63-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:18-67
+64        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetoothNoGPS" />
+64-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:9-83
+64-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:18-72
+65        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoGPS" />
+65-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:9-72
+65-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:18-61
+66        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManager" />
+66-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:9-70
+66-->C:\Users\Bento\Desktop\SEAMS2020\phoneadapter\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:18-59
+67    </application>
+68
+69</manifest>

@@ -4,15 +4,16 @@ package edu.hkust.cse.phoneAdapter.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import edu.hkust.cse.phoneAdapter.R;
 import edu.hkust.cse.phoneAdapter.context.AdaptationManager;
-import edu.hkust.cse.phoneAdapter.context.ContextManagerComplete;
 import edu.hkust.cse.phoneAdapter.context.MetaController;
 
 /**
