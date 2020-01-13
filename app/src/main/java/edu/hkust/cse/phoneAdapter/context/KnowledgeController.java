@@ -48,8 +48,6 @@ public class KnowledgeController extends IntentService {
         monitoringLocationStatus = new KnowledgeController.MonitoringLocationStatus();
         mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, monitoringLocationStatus);
 
-        Log.e("BentoSiqueira", "TestesAqui");
-
         mHandler=new Handler();
 
         mMonitoringBTStatusReceiver = new MonitoringBluetoothStatus();

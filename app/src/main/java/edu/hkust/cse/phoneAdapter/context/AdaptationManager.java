@@ -529,14 +529,7 @@ public class AdaptationManager extends IntentService {
 				Filter filter=fList.get(k);
 				switch(filter.contextType){
 				case ContextType.GPS_ISVALID:
-					//int value=Integer.parseInt(filter.contextValue);
-					int value = 0; //false por padrao
-					//int value=Integer.parseInt(filter.contextValue);
-					if(filter.contextValue.toLowerCase() == "true")
-						value = 1;
-					else
-						value = 0;
-
+					int value=Integer.parseInt(filter.contextValue);
 					boolean bool=(value==1)?true:false;
 					if(filter.contextOp==ContextOperator.EQUAL){
 						if(gpsAvailable!=bool){
