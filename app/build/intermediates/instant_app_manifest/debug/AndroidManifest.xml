@@ -58,7 +58,12 @@
             android:name="edu.hkust.cse.phoneAdapter.activity.SearchAndSaveBTDevice"
             android:label="@string/search_save_device_activity_label" />
 
-        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManager" />
+        <service android:name="edu.hkust.cse.phoneAdapter.context.KnowledgeController" />
+        <service android:name="edu.hkust.cse.phoneAdapter.context.MetaController" />
+        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerAllSensors" />
+        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetooth" />
+        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetoothNoGPS" />
+        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoGPS" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManager" />
     </application>
 

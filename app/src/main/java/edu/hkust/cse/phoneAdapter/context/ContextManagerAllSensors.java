@@ -31,7 +31,7 @@ import edu.hkust.cse.phoneAdapter.activity.MainActivity;
  * The Class ContextManager.
  * @author andrew
  */
-public class ContextManagerComplete extends IntentService {
+public class ContextManagerAllSensors extends IntentService {
 	private boolean mGpsAvailable;
 	private String mLocation;
 	private double mSpeed;
@@ -56,8 +56,8 @@ public class ContextManagerComplete extends IntentService {
 	/**
 	 * Instantiates a new context manager.
 	 */
-	public ContextManagerComplete(){
-		super("ContextManagerComplete");
+	public ContextManagerAllSensors(){
+		super("ContextManagerAllSensors");
 	}
 	
 	@Override
@@ -144,7 +144,7 @@ public class ContextManagerComplete extends IntentService {
 		
 		startForeground(1346, noti);
 
-        ContextManagerComplete.running = true;
+        ContextManagerAllSensors.running = true;
 	}
 	
 	@Override
@@ -168,7 +168,7 @@ public class ContextManagerComplete extends IntentService {
 		/**stop foreground service**/
 		stopForeground(true);
 
-        ContextManagerComplete.running = false;
+        ContextManagerAllSensors.running = false;
 		
 		super.onDestroy();
 	}
@@ -338,11 +338,11 @@ public class ContextManagerComplete extends IntentService {
 	}
 	
 	/** indicate whether the service is running or not*/
-	
+
 	public static boolean isRunning(){
-		return ContextManagerComplete.running;
+		return ContextManagerAllSensors.running;
 	}
-	
+
 	/**
 	 * The Class MyBroadcastReceiver.
 	 */
