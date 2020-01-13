@@ -13,6 +13,7 @@ import android.widget.Button;
 import edu.hkust.cse.phoneAdapter.R;
 import edu.hkust.cse.phoneAdapter.context.AdaptationManager;
 import edu.hkust.cse.phoneAdapter.context.ContextManagerComplete;
+import edu.hkust.cse.phoneAdapter.context.KnowledgeController;
 import edu.hkust.cse.phoneAdapter.context.MetaController;
 
 /**
@@ -64,9 +65,14 @@ public class MainActivity extends Activity {
          * (2) AdaptationManager evaluates active rules upon context change, and triggers the actions specified in the satisfied rule
          */
 
+		Intent knowledgeControllerIntent=new Intent(this, KnowledgeController.class);
+		startService(knowledgeControllerIntent);
+
         // METACONTROLLER HERE
 		Intent metaControllerIntent=new Intent(this, MetaController.class);
 		startService(metaControllerIntent);
+
+
 
     }
     
