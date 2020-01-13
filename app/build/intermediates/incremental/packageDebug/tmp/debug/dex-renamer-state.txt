@@ -1,4 +1,7 @@
-#Thu Jan 02 10:06:55 BRST 2020
+#Mon Jan 13 09:42:20 BRST 2020
 base.0=C\:\\Users\\Bento\\Desktop\\SEAMS2020\\phoneadapter\\PhoneAdapter_MicroControllersSA\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.1=classes.dex
+renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
+base.1=C\:\\Users\\Bento\\source\\repos\\PhoneAdapter_MicroControllersSA\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex

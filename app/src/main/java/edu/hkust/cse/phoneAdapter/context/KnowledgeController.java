@@ -98,6 +98,8 @@ public class KnowledgeController extends IntentService {
                     sendBroadcast(i);
                 }});
 
+            // We can put an identification of change HERE
+
             try{
                 Thread.sleep(60000);
             } catch(Exception e){

@@ -20,7 +20,8 @@ import edu.hkust.cse.phoneAdapter.activity.MainActivity;
 public class MetaController extends IntentService {
 
     private static boolean running;
-    private FeedbackLoopMetaController mFeedbackLoopMetaControllerReceiver;
+    private static FeedbackLoopMetaController mFeedbackLoopMetaControllerReceiver;
+    private static int countChanged = 0;
 
     /**
      * Instantiates a new context manager.
@@ -32,6 +33,8 @@ public class MetaController extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        ConfigurationA = "AllSensors";
 
         mFeedbackLoopMetaControllerReceiver = new FeedbackLoopMetaController();
         IntentFilter iFilter = new IntentFilter();
@@ -71,6 +74,10 @@ public class MetaController extends IntentService {
 
     }
 
+
+    private static String ConfigurationA;
+    private static String ConfigurationB;
+
     /**
      * The Class FeedbackLoopMetaController.
      */
@@ -80,22 +87,26 @@ public class MetaController extends IntentService {
         public void onReceive(Context c, Intent i) {
             String action=i.getAction();
 
-            /* stop the ContextManager and Adaptation Manager service before destroying the main activity */
-            Intent j = new Intent("edu.hkust.cse.phoneAdapter.stopContextManager");
-            sendBroadcast(j);
-
-            if(action.equals("edu.hkust.cse.phoneAdapter.knowledge")){
+            if(action.equals("edu.hkust.cse.phoneAdapter.requiredChange")){
+                RegressionTestMicroController regressionTest = new RegressionTestMicroController();
+                // It is the first change
+                if(countChanged == 0){
+                    regressionTest.startRegression(c,"","");
+                }
+            }
+            else if(action.equals("edu.hkust.cse.phoneAdapter.knowledge")){
                 boolean gpsAvailable = i.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
                 boolean btAvailable = i.getBooleanExtra(ContextName.BT_AVAILABLE, false);
 
                 if(gpsAvailable && !btAvailable) {
                     Intent contextManagerNoBluetoothIntent = new Intent(c, ContextManagerNoBluetooth.class);
                     startService(contextManagerNoBluetoothIntent);
+                }
                 if(!gpsAvailable && btAvailable){
                     Intent contextManagerNoGPSIntent = new Intent(c, ContextManagerNoGPS.class);
                     startService(contextManagerNoGPSIntent);
                 }
-                }else if(!gpsAvailable && !btAvailable) {
+                else if(!gpsAvailable && !btAvailable) {
                     Intent contextManagerNoBluetoothNoGPSIntent = new Intent(c, ContextManagerNoBluetoothNoGPS.class);
                     startService(contextManagerNoBluetoothNoGPSIntent);
                 }else{
