@@ -278,7 +278,7 @@ public class ContextManagerNoBluetooth extends IntentService {
      * @return speed
      */
     private double calculateSpeed(String lastLoc, String curLoc, int duration){
-        double d=AdaptationManager.calculateDist(lastLoc, curLoc);
+        double d= AdaptationManagerAllEffectors.calculateDist(lastLoc, curLoc);
         double result=d/(duration/1000.0);
         return result;
     }

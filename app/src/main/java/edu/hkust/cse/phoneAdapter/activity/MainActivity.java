@@ -4,16 +4,14 @@ package edu.hkust.cse.phoneAdapter.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 import edu.hkust.cse.phoneAdapter.R;
-import edu.hkust.cse.phoneAdapter.context.AdaptationManager;
+import edu.hkust.cse.phoneAdapter.context.AdaptationManagerAllEffectors;
 import edu.hkust.cse.phoneAdapter.context.MetaController;
 
 /**
@@ -62,7 +60,7 @@ public class MainActivity extends Activity {
         /*
          * start intent service
          * (1) ContextManager intentService retrieves sensing data from both logical (e.g., clock) and physical (e.g., GPS) sensors
-         * (2) AdaptationManager evaluates active rules upon context change, and triggers the actions specified in the satisfied rule
+         * (2) AdaptationManagerAllEffectors evaluates active rules upon context change, and triggers the actions specified in the satisfied rule
          */
 
         // METACONTROLLER HERE
@@ -177,14 +175,14 @@ public class MainActivity extends Activity {
 		   Intent metaControllerIntent=new Intent(this, MetaController.class);
 	       startService(metaControllerIntent);
 	   }
-	   if(!AdaptationManager.isRunning()){
-		   Intent adaptationManagerIntent=new Intent(this, AdaptationManager.class);
+	   if(!AdaptationManagerAllEffectors.isRunning()){
+		   Intent adaptationManagerIntent=new Intent(this, AdaptationManagerAllEffectors.class);
 	       startService(adaptationManagerIntent);
 	   }
    }
    
    private void stopService(){
-	   if(MetaController.isRunning() || AdaptationManager.isRunning()){
+	   if(MetaController.isRunning() || AdaptationManagerAllEffectors.isRunning()){
 		   /* stop the ContextManager and Adaptation Manager service before destroying the main activity */
 	    	Intent i=new Intent("edu.hkust.cse.phoneAdapter.stopService");
 	    	sendBroadcast(i);

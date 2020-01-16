@@ -75,8 +75,9 @@ public class MetaController extends IntentService {
     }
 
 
-    private static String ConfigurationA;
-    private static String ConfigurationB;
+    private static String ConfigurationA = "AllSensors";
+    private static String ConfigurationB = "";
+    private static RegressionTestMicroController regressionTest = new RegressionTestMicroController();
 
     /**
      * The Class FeedbackLoopMetaController.
@@ -88,29 +89,30 @@ public class MetaController extends IntentService {
             String action=i.getAction();
 
             if(action.equals("edu.hkust.cse.phoneAdapter.requiredChange")){
-                RegressionTestMicroController regressionTest = new RegressionTestMicroController();
-                // It is the first change
-                if(countChanged == 0){
-                    regressionTest.startRegression(c,"","");
-                }
+                regressionTest.startRegression(c, ConfigurationA, ConfigurationB);
             }
             else if(action.equals("edu.hkust.cse.phoneAdapter.knowledge")){
                 boolean gpsAvailable = i.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
                 boolean btAvailable = i.getBooleanExtra(ContextName.BT_AVAILABLE, false);
+                ConfigurationA = ConfigurationB;
 
                 if(gpsAvailable && !btAvailable) {
                     Intent contextManagerNoBluetoothIntent = new Intent(c, ContextManagerNoBluetooth.class);
+                    ConfigurationB = "NoBluetooth";
                     startService(contextManagerNoBluetoothIntent);
                 }
                 if(!gpsAvailable && btAvailable){
                     Intent contextManagerNoGPSIntent = new Intent(c, ContextManagerNoGPS.class);
+                    ConfigurationB = "NoGPS";
                     startService(contextManagerNoGPSIntent);
                 }
                 else if(!gpsAvailable && !btAvailable) {
                     Intent contextManagerNoBluetoothNoGPSIntent = new Intent(c, ContextManagerNoBluetoothNoGPS.class);
+                    ConfigurationB = "NoBluetoothNoGPS";
                     startService(contextManagerNoBluetoothNoGPSIntent);
                 }else{
                     Intent contextManagerCompleteIntent = new Intent(c, ContextManagerAllSensors.class);
+                    ConfigurationB = "AllSensors";
                     startService(contextManagerCompleteIntent);
                 }
             }

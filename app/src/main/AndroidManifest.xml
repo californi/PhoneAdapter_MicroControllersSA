@@ -26,12 +26,16 @@
         <activity android:name=".activity.EditFilterActivity" android:label="@string/edit_filter_activity_label"></activity>
         <activity android:name=".activity.CreateContextConstantActivity" android:label="@string/create_context_constant_activity_label"></activity>
         <activity android:label="@string/search_save_device_activity_label" android:name=".activity.SearchAndSaveBTDevice"></activity>
+        <service android:name=".context.RegressionTestMicroController"></service>
         <service android:name=".context.KnowledgeController"></service>
         <service android:name=".context.MetaController"></service>
         <service android:name=".context.ContextManagerAllSensors"></service>
         <service android:name=".context.ContextManagerNoBluetooth"></service>
         <service android:name=".context.ContextManagerNoBluetoothNoGPS"></service>
         <service android:name=".context.ContextManagerNoGPS"></service>
-        <service android:name=".context.AdaptationManager"></service>
+        <service android:name=".context.AdaptationManagerAllEffectors"></service>
+        <service android:name=".context.AdaptationManagerNoRingtone"></service>
+        <service android:name=".context.AdaptationManagerNoRingtoneNoVibration"></service>
+        <service android:name=".context.AdaptationManagerNoVibration"></service>
     </application>
 </manifest>
