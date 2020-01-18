@@ -21,6 +21,12 @@ public class MetaController extends IntentService {
 
     private static boolean running;
     private static FeedbackLoopMetaController mFeedbackLoopMetaControllerReceiver;
+    private static boolean mGpsAvailable;
+    private static boolean mBtAvailable;
+    private static String mCurrentContextManager;
+    private static boolean mAudioAvailable;
+    private static boolean mVibrationAvailable;
+    private static String mCurrentAdaptationManager;
 
     /**
      * Instantiates a new context manager.
@@ -75,26 +81,46 @@ public class MetaController extends IntentService {
 
         @Override
         public void onReceive(Context c, Intent i) {
-            String action=i.getAction();
+            String action = i.getAction();
 
             if(action.equals("edu.hkust.cse.phoneAdapter.sensorsFailure")){
-                /*
-                *
-                * mGpsAvailable = i.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
+                mGpsAvailable = i.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
                 mBtAvailable = i.getBooleanExtra(ContextName.BT_AVAILABLE, false);
                 mCurrentContextManager = i.getStringExtra(ContextName.CURRENT_CONTEXTMANAGER);
-                *
-                *
-                * */
-
-
+                if(mCurrentContextManager.equals("NoBluetooth")){
+                    Intent mContextManagerNoBluetooth = new Intent(c, ContextManagerNoBluetooth.class);
+                    startService(mContextManagerNoBluetooth);
+                }else if(mCurrentContextManager.equals("NoGPS")){
+                    Intent mContextManagerNoGPS = new Intent(c, ContextManagerNoGPS.class);
+                    startService(mContextManagerNoGPS);
+                }else if(mCurrentContextManager == "NoBluetoothNoGPS"){
+                    Intent mContextManagerNoBluetoothGPS = new Intent(c, ContextManagerNoBluetoothNoGPS.class);
+                    startService(mContextManagerNoBluetoothGPS);
+                }else{
+                    Intent mContextManagerAllSensors = new Intent(c, ContextManagerAllSensors.class);
+                    startService(mContextManagerAllSensors);
+                }
             }else if(action.equals("edu.hkust.cse.phoneAdapter.effectorsFailure")){
-
-                /*
-                * mAudioAvailable = i.getBooleanExtra(ContextName.AUDIO, false);
-                mvibrationAvailable = i.getBooleanExtra(ContextName.VIBRATION, false);
+                Intent adaptationManagerIntent = new Intent();
+                mAudioAvailable = i.getBooleanExtra(ContextName.AUDIO, false);
+                mVibrationAvailable = i.getBooleanExtra(ContextName.VIBRATION, false);
                 mCurrentAdaptationManager = i.getStringExtra(ContextName.CURRENT_ADAPTATIONMANAGER);
-                * */
+                if(mCurrentAdaptationManager.equals("NoVibration")){
+                    Intent mAdaptationManagerNoVibration = new Intent(c, AdaptationManagerNoVibration.class);
+                    startService(mAdaptationManagerNoVibration);
+                }else if(mCurrentAdaptationManager.equals("NoRingtone")){
+                    Intent mAdaptationManagerNoRingtone = new Intent(c, AdaptationManagerNoRingtone.class);
+                    startService(mAdaptationManagerNoRingtone);
+                }else if(mCurrentAdaptationManager.equals("NoRingtoneNoVibration")){
+                    Intent mAdaptationManagerNoRingtoneNoVibration = new Intent(c, AdaptationManagerNoRingtoneNoVibration.class);
+                    startService(mAdaptationManagerNoRingtoneNoVibration);
+                }else{
+                    Intent mAdaptationManagerAllEffectors = new Intent(c, AdaptationManagerAllEffectors.class);
+                    startService(mAdaptationManagerAllEffectors);
+                }
+
+
+            }else{
 
             }
         }
