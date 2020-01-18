@@ -1,12 +1,12 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-41:12
-INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-41:12
-INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-41:12
-INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-41:12
-INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-41:12
-INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-41:12
-INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-41:12
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:2:1-42:12
 	package
 		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:4:33-69
 		INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml
@@ -41,130 +41,130 @@ uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:10:5-97
 	android:name
 		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:10:22-78
+uses-permission#android.permission.VIBRATE
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:11:5-65
+	android:name
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:11:22-63
 application
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:12:5-40:19
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:13:5-41:19
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:12:48-80
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:13:48-80
 	android:icon
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:12:18-47
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:13:18-47
 activity#edu.hkust.cse.phoneAdapter.activity.MainActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:13:9-18:20
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:14:9-19:20
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:13:19-56
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:14:19-56
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:14:10-17:29
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:15:10-18:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:15:17-69
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:16:17-69
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:15:25-66
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:16:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:16:17-77
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:17:17-77
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:16:27-74
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:17:27-74
 activity#edu.hkust.cse.phoneAdapter.activity.CreateProfileActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:19:9-131
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:9-131
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:19:66-119
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:66-119
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:19:19-65
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:19-65
 activity#edu.hkust.cse.phoneAdapter.activity.CreateRuleActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:9-125
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:9-125
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:63-113
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:63-113
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:19-62
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:19-62
 activity#edu.hkust.cse.phoneAdapter.activity.ViewProfileActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:9-127
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:9-127
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:19-70
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:19-70
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:71-115
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:71-115
 activity#edu.hkust.cse.phoneAdapter.activity.ViewRuleActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:9-122
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:9-122
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:19-68
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:19-68
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:69-110
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:69-110
 activity#edu.hkust.cse.phoneAdapter.activity.EditProfileActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:9-127
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:9-127
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:19-70
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:19-70
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:71-115
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:71-115
 activity#edu.hkust.cse.phoneAdapter.activity.EditRuleActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:9-121
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:9-121
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:19-67
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:19-67
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:68-109
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:68-109
 activity#edu.hkust.cse.phoneAdapter.activity.CreateFilterActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:9-129
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:9-129
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:65-117
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:65-117
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:19-64
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:19-64
 activity#edu.hkust.cse.phoneAdapter.activity.EditFilterActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:9-125
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:9-125
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:63-113
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:63-113
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:19-62
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:19-62
 activity#edu.hkust.cse.phoneAdapter.activity.CreateContextConstantActivity
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:9-148
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:9-148
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:74-136
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:74-136
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:19-73
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:19-73
 activity#edu.hkust.cse.phoneAdapter.activity.SearchAndSaveBTDevice
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:9-135
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:9-135
 	android:label
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:19-76
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:19-76
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:77-123
-service#edu.hkust.cse.phoneAdapter.context.RegressionTestMicroController
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:9-82
-	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:18-71
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:77-123
 service#edu.hkust.cse.phoneAdapter.context.KnowledgeController
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:30:9-72
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:9-72
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:30:18-61
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:18-61
 service#edu.hkust.cse.phoneAdapter.context.MetaController
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:9-67
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:9-67
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:18-56
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:18-56
 service#edu.hkust.cse.phoneAdapter.context.ContextManagerAllSensors
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:9-77
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:9-77
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:18-66
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:18-66
 service#edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetooth
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:9-78
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:9-78
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:18-67
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:18-67
 service#edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetoothNoGPS
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:9-83
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:9-83
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:18-72
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:18-72
 service#edu.hkust.cse.phoneAdapter.context.ContextManagerNoGPS
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:9-72
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:36:9-72
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:18-61
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:36:18-61
 service#edu.hkust.cse.phoneAdapter.context.AdaptationManagerAllEffectors
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:36:9-82
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:37:9-82
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:36:18-71
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:37:18-71
 service#edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoRingtone
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:37:9-80
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:38:9-80
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:37:18-69
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:38:18-69
 service#edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoRingtoneNoVibration
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:38:9-91
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:39:9-91
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:38:18-80
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:39:18-80
 service#edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoVibration
-ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:39:9-81
+ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:40:9-81
 	android:name
-		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:39:18-70
+		ADDED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:40:18-70
 uses-sdk
 INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml

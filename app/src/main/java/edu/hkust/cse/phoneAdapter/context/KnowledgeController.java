@@ -12,8 +12,10 @@ import android.content.IntentFilter;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,9 +28,12 @@ public class KnowledgeController extends IntentService {
     private static boolean running;
     public static boolean mGpsAvailable;
     public static boolean mBtAvailable;
-    private LocationListener monitoringLocationStatus;
-    private LocationManager mLocManager;
-    private MonitoringBluetoothStatus mMonitoringBTStatusReceiver;
+    public static boolean mAudioAvailable;
+    public static boolean mvibrationAvailable;
+    public static String mCurrentContextManager;
+    public static String mCurrentAdaptationManager;
+
+    private FeedbackLoopUpdateKnowledge mFeedbackLoopUpdateKnowledge;
     private BluetoothAdapter mBtAdapter;
     private Handler mHandler;
 
@@ -43,24 +48,12 @@ public class KnowledgeController extends IntentService {
     public void onCreate() {
         super.onCreate();
 
-        //GPS Monitoring
-        mLocManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        monitoringLocationStatus = new KnowledgeController.MonitoringLocationStatus();
-        mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, monitoringLocationStatus);
-
+        mFeedbackLoopUpdateKnowledge = new KnowledgeController.FeedbackLoopUpdateKnowledge();
         mHandler=new Handler();
 
-        mMonitoringBTStatusReceiver = new MonitoringBluetoothStatus();
-        IntentFilter iFilter = new IntentFilter();
-        iFilter.addAction("edu.hkust.cse.phoneAdapter.stopService");
-        if(mBtAdapter != null){
-            if(mBtAdapter.isEnabled()){
-                iFilter.addAction(BluetoothDevice.ACTION_FOUND);
-                iFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-                iFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-            }
-        }
-        registerReceiver(mMonitoringBTStatusReceiver, iFilter);
+
+        Intent mFeedbackLoopUpdateKnowledge = new Intent(this, FeedbackLoopUpdateKnowledge.class);
+        startService(mFeedbackLoopUpdateKnowledge);
 
         /**start foreground service**/
         // step 1: instantiate the notification
@@ -82,30 +75,53 @@ public class KnowledgeController extends IntentService {
         KnowledgeController.running = true;
     }
 
+
+
+
     @Override
     protected void onHandleIntent(Intent arg0){
 
-        while(KnowledgeController.isRunning()){
+        int timeMonitoring = 240000;
+        while (true) {
 
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    /* broadcast new context*/
-                    Intent i = new Intent();
-                    i.setAction("edu.hkust.cse.phoneAdapter.knowledge");
-                    i.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
-                    i.putExtra(ContextName.BT_AVAILABLE, mBtAvailable);
-                    sendBroadcast(i);
+                    //do something
                 }});
 
-            // We can put an identification of change HERE
-
             try{
-                Thread.sleep(60000);
+                Thread.sleep(timeMonitoring);
             } catch(Exception e){
                 Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
             }
         }
+    }
+
+
+    private class FeedbackLoopUpdateKnowledge extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context c, Intent i) {
+            String action=i.getAction();
+
+
+            if(action.equals("edu.hkust.cse.phoneAdapter.sensorsFailure")){
+                mGpsAvailable = i.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
+                mBtAvailable = i.getBooleanExtra(ContextName.BT_AVAILABLE, false);
+                mCurrentContextManager = i.getStringExtra(ContextName.CURRENT_CONTEXTMANAGER);
+                sendBroadcast(i);
+
+            }else if(action.equals("edu.hkust.cse.phoneAdapter.effectorsFailure")){
+                mAudioAvailable = i.getBooleanExtra(ContextName.AUDIO, false);
+                mvibrationAvailable = i.getBooleanExtra(ContextName.VIBRATION, false);
+                mCurrentAdaptationManager = i.getStringExtra(ContextName.CURRENT_ADAPTATIONMANAGER);
+                sendBroadcast(i);
+            }else{
+
+            }
+        }
+
     }
 
     public static boolean isRunning(){
@@ -115,8 +131,7 @@ public class KnowledgeController extends IntentService {
     @Override
     public void onDestroy(){
         try{
-            unregisterReceiver(mMonitoringBTStatusReceiver);
-            mLocManager.removeUpdates(monitoringLocationStatus);
+            unregisterReceiver(mFeedbackLoopUpdateKnowledge);
         } catch(Exception e){
             mHandler.post(new Runnable() {
                 @Override
@@ -133,74 +148,5 @@ public class KnowledgeController extends IntentService {
         super.onDestroy();
     }
 
-    /**
-     * The listener interface for receiving myLocation events.
-     * The class that is interested in processing a myLocation
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addMyLocationListener<code> method. When
-     * the myLocation event occurs, that object's appropriate
-     * method is invoked.
-     *
-     * @see MonitoringLocationStatus
-     */
-    private class MonitoringLocationStatus implements LocationListener{
 
-        @Override
-        public void onLocationChanged(Location loc) {
-            mGpsAvailable=true;
-        }
-
-        @Override
-        public void onProviderDisabled(String arg0) {
-            /* set mLocation to null, set last location to null and update last time to 0 */
-            mGpsAvailable=false;
-        }
-
-        @Override
-        public void onProviderEnabled(String arg0) {
-            mGpsAvailable=true;
-        }
-
-        @Override
-        public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-
-        }
-    }
-
-    /**
-     * The Class MonitoringBluetoothStatus.
-     */
-    private class MonitoringBluetoothStatus extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context c, Intent i) {
-
-            mBtAdapter=BluetoothAdapter.getDefaultAdapter();
-            if(mBtAdapter==null){
-                Toast.makeText(getApplicationContext(), "Bluetooth is not supported on this device!", Toast.LENGTH_SHORT).show();
-                mBtAvailable = false;
-                return;
-            } else{
-                mBtAdapter.enable();
-            }
-
-            String action=i.getAction();
-            if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED)){
-
-            } else if( action.equals(BluetoothDevice.ACTION_FOUND)){
-                BluetoothDevice device=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                mBtAvailable = device != null;
-            } else if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
-
-            } else if(action.equals(BluetoothAdapter.ERROR) ||
-                      action.equals(BluetoothAdapter.STATE_OFF) ||
-                      action.equals(BluetoothAdapter.STATE_TURNING_OFF)){
-                mBtAvailable = false;
-            }
-            else {
-
-            }
-        }
-    }
 }

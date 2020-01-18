@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".activity.MainActivity">
@@ -26,7 +27,7 @@
         <activity android:name=".activity.EditFilterActivity" android:label="@string/edit_filter_activity_label"></activity>
         <activity android:name=".activity.CreateContextConstantActivity" android:label="@string/create_context_constant_activity_label"></activity>
         <activity android:label="@string/search_save_device_activity_label" android:name=".activity.SearchAndSaveBTDevice"></activity>
-        <service android:name=".context.RegressionTestMicroController"></service>
+
         <service android:name=".context.KnowledgeController"></service>
         <service android:name=".context.MetaController"></service>
         <service android:name=".context.ContextManagerAllSensors"></service>

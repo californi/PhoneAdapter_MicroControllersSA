@@ -22,4 +22,12 @@ public interface ContextName {
 	
 	public static final String WEEKDAY="Weekday";
 
+	public static final String AUDIO="Audio";
+
+	public static final String VIBRATION="Vibration";
+
+
+	public static final String CURRENT_CONTEXTMANAGER = "CurrentContextManager";
+	public static final String CURRENT_ADAPTATIONMANAGER = "CurrentAdaptationManager";
+
 }

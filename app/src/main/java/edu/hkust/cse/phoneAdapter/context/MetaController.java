@@ -21,7 +21,6 @@ public class MetaController extends IntentService {
 
     private static boolean running;
     private static FeedbackLoopMetaController mFeedbackLoopMetaControllerReceiver;
-    private static int countChanged = 0;
 
     /**
      * Instantiates a new context manager.
@@ -33,8 +32,6 @@ public class MetaController extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        ConfigurationA = "AllSensors";
 
         mFeedbackLoopMetaControllerReceiver = new FeedbackLoopMetaController();
         IntentFilter iFilter = new IntentFilter();
@@ -67,17 +64,9 @@ public class MetaController extends IntentService {
 
         while(MetaController.isRunning()){
 
-
-
         }
 
-
     }
-
-
-    private static String ConfigurationA = "AllSensors";
-    private static String ConfigurationB = "";
-    private static RegressionTestMicroController regressionTest = new RegressionTestMicroController();
 
     /**
      * The Class FeedbackLoopMetaController.
@@ -88,33 +77,25 @@ public class MetaController extends IntentService {
         public void onReceive(Context c, Intent i) {
             String action=i.getAction();
 
-            if(action.equals("edu.hkust.cse.phoneAdapter.requiredChange")){
-                regressionTest.startRegression(c, ConfigurationA, ConfigurationB);
-            }
-            else if(action.equals("edu.hkust.cse.phoneAdapter.knowledge")){
-                boolean gpsAvailable = i.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
-                boolean btAvailable = i.getBooleanExtra(ContextName.BT_AVAILABLE, false);
-                ConfigurationA = ConfigurationB;
+            if(action.equals("edu.hkust.cse.phoneAdapter.sensorsFailure")){
+                /*
+                *
+                * mGpsAvailable = i.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
+                mBtAvailable = i.getBooleanExtra(ContextName.BT_AVAILABLE, false);
+                mCurrentContextManager = i.getStringExtra(ContextName.CURRENT_CONTEXTMANAGER);
+                *
+                *
+                * */
 
-                if(gpsAvailable && !btAvailable) {
-                    Intent contextManagerNoBluetoothIntent = new Intent(c, ContextManagerNoBluetooth.class);
-                    ConfigurationB = "NoBluetooth";
-                    startService(contextManagerNoBluetoothIntent);
-                }
-                if(!gpsAvailable && btAvailable){
-                    Intent contextManagerNoGPSIntent = new Intent(c, ContextManagerNoGPS.class);
-                    ConfigurationB = "NoGPS";
-                    startService(contextManagerNoGPSIntent);
-                }
-                else if(!gpsAvailable && !btAvailable) {
-                    Intent contextManagerNoBluetoothNoGPSIntent = new Intent(c, ContextManagerNoBluetoothNoGPS.class);
-                    ConfigurationB = "NoBluetoothNoGPS";
-                    startService(contextManagerNoBluetoothNoGPSIntent);
-                }else{
-                    Intent contextManagerCompleteIntent = new Intent(c, ContextManagerAllSensors.class);
-                    ConfigurationB = "AllSensors";
-                    startService(contextManagerCompleteIntent);
-                }
+
+            }else if(action.equals("edu.hkust.cse.phoneAdapter.effectorsFailure")){
+
+                /*
+                * mAudioAvailable = i.getBooleanExtra(ContextName.AUDIO, false);
+                mvibrationAvailable = i.getBooleanExtra(ContextName.VIBRATION, false);
+                mCurrentAdaptationManager = i.getStringExtra(ContextName.CURRENT_ADAPTATIONMANAGER);
+                * */
+
             }
         }
 
