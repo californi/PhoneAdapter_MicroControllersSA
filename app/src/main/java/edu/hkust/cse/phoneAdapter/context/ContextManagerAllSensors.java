@@ -175,6 +175,9 @@ public class ContextManagerAllSensors extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent arg0) {
+
+        Log.i("Testando onHandleIntent ContextManagerAllSensors", "ContextManagerAllSensors" + Thread.currentThread().getName());
+
 		/*
 		 * collect contexts every a while and broadcast the context change
 		 * context type includes

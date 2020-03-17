@@ -30,117 +30,121 @@
 16-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:11:22-63
 17
 18    <application
-18-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:13:5-41:19
+18-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:13:5-43:19
 19        android:debuggable="true"
 20        android:icon="@drawable/icon"
 20-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:13:18-47
-21        android:label="@string/app_name" >
+21        android:label="@string/app_name"
 21-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:13:48-80
-22        <activity android:name="edu.hkust.cse.phoneAdapter.activity.MainActivity" >
-22-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:14:9-19:20
-22-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:14:19-56
-23            <intent-filter>
-23-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:15:10-18:29
-24                <action android:name="android.intent.action.MAIN" />
-24-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:16:17-69
-24-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:16:25-66
-25
-26                <category android:name="android.intent.category.LAUNCHER" />
-26-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:17:17-77
-26-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:17:27-74
-27            </intent-filter>
-28        </activity>
-29        <activity
-29-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:9-131
-30            android:name="edu.hkust.cse.phoneAdapter.activity.CreateProfileActivity"
-30-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:19-65
-31            android:label="@string/create_profile_activity_label" />
-31-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:66-119
-32        <activity
-32-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:9-125
-33            android:name="edu.hkust.cse.phoneAdapter.activity.CreateRuleActivity"
-33-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:19-62
-34            android:label="@string/create_rule_activity_label" />
-34-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:63-113
-35        <activity
-35-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:9-127
-36            android:name="edu.hkust.cse.phoneAdapter.activity.ViewProfileActivity"
-36-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:71-115
-37            android:label="@string/view_profile_activity_label" />
-37-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:19-70
-38        <activity
-38-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:9-122
-39            android:name="edu.hkust.cse.phoneAdapter.activity.ViewRuleActivity"
-39-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:69-110
-40            android:label="@string/view_rules_activity_label" />
-40-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:19-68
-41        <activity
-41-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:9-127
-42            android:name="edu.hkust.cse.phoneAdapter.activity.EditProfileActivity"
-42-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:71-115
-43            android:label="@string/edit_profile_activity_label" />
-43-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:19-70
-44        <activity
-44-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:9-121
-45            android:name="edu.hkust.cse.phoneAdapter.activity.EditRuleActivity"
-45-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:68-109
-46            android:label="@string/edit_rule_activity_label" />
-46-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:19-67
-47        <activity
-47-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:9-129
-48            android:name="edu.hkust.cse.phoneAdapter.activity.CreateFilterActivity"
-48-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:19-64
-49            android:label="@string/create_filter_activity_label" />
-49-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:65-117
-50        <activity
-50-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:9-125
-51            android:name="edu.hkust.cse.phoneAdapter.activity.EditFilterActivity"
-51-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:19-62
-52            android:label="@string/edit_filter_activity_label" />
-52-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:63-113
-53        <activity
-53-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:9-148
-54            android:name="edu.hkust.cse.phoneAdapter.activity.CreateContextConstantActivity"
-54-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:19-73
-55            android:label="@string/create_context_constant_activity_label" />
-55-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:74-136
-56        <activity
-56-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:9-135
-57            android:name="edu.hkust.cse.phoneAdapter.activity.SearchAndSaveBTDevice"
-57-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:77-123
-58            android:label="@string/search_save_device_activity_label" />
-58-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:19-76
-59
-60        <service android:name="edu.hkust.cse.phoneAdapter.context.KnowledgeController" />
-60-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:9-72
-60-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:18-61
-61        <service android:name="edu.hkust.cse.phoneAdapter.context.MetaController" />
-61-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:9-67
-61-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:18-56
-62        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerAllSensors" />
-62-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:9-77
-62-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:18-66
-63        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetooth" />
-63-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:9-78
-63-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:18-67
-64        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetoothNoGPS" />
-64-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:9-83
-64-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:18-72
-65        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoGPS" />
-65-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:36:9-72
-65-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:36:18-61
-66        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerAllEffectors" />
-66-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:37:9-82
-66-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:37:18-71
-67        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoRingtone" />
-67-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:38:9-80
-67-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:38:18-69
-68        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoRingtoneNoVibration" />
-68-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:39:9-91
-68-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:39:18-80
-69        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoVibration" />
-69-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:40:9-81
-69-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:40:18-70
-70    </application>
-71
-72</manifest>
+22        android:testOnly="true" >
+23        <activity android:name="edu.hkust.cse.phoneAdapter.activity.MainActivity" >
+23-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:14:9-19:20
+23-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:14:19-56
+24            <intent-filter>
+24-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:15:10-18:29
+25                <action android:name="android.intent.action.MAIN" />
+25-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:16:17-69
+25-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:16:25-66
+26
+27                <category android:name="android.intent.category.LAUNCHER" />
+27-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:17:17-77
+27-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:17:27-74
+28            </intent-filter>
+29        </activity>
+30        <activity
+30-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:9-131
+31            android:name="edu.hkust.cse.phoneAdapter.activity.CreateProfileActivity"
+31-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:19-65
+32            android:label="@string/create_profile_activity_label" />
+32-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:20:66-119
+33        <activity
+33-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:9-125
+34            android:name="edu.hkust.cse.phoneAdapter.activity.CreateRuleActivity"
+34-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:19-62
+35            android:label="@string/create_rule_activity_label" />
+35-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:21:63-113
+36        <activity
+36-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:9-127
+37            android:name="edu.hkust.cse.phoneAdapter.activity.ViewProfileActivity"
+37-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:71-115
+38            android:label="@string/view_profile_activity_label" />
+38-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:22:19-70
+39        <activity
+39-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:9-122
+40            android:name="edu.hkust.cse.phoneAdapter.activity.ViewRuleActivity"
+40-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:69-110
+41            android:label="@string/view_rules_activity_label" />
+41-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:23:19-68
+42        <activity
+42-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:9-127
+43            android:name="edu.hkust.cse.phoneAdapter.activity.EditProfileActivity"
+43-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:71-115
+44            android:label="@string/edit_profile_activity_label" />
+44-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:24:19-70
+45        <activity
+45-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:9-121
+46            android:name="edu.hkust.cse.phoneAdapter.activity.EditRuleActivity"
+46-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:68-109
+47            android:label="@string/edit_rule_activity_label" />
+47-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:25:19-67
+48        <activity
+48-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:9-129
+49            android:name="edu.hkust.cse.phoneAdapter.activity.CreateFilterActivity"
+49-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:19-64
+50            android:label="@string/create_filter_activity_label" />
+50-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:26:65-117
+51        <activity
+51-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:9-125
+52            android:name="edu.hkust.cse.phoneAdapter.activity.EditFilterActivity"
+52-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:19-62
+53            android:label="@string/edit_filter_activity_label" />
+53-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:27:63-113
+54        <activity
+54-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:9-148
+55            android:name="edu.hkust.cse.phoneAdapter.activity.CreateContextConstantActivity"
+55-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:19-73
+56            android:label="@string/create_context_constant_activity_label" />
+56-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:28:74-136
+57        <activity
+57-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:9-135
+58            android:name="edu.hkust.cse.phoneAdapter.activity.SearchAndSaveBTDevice"
+58-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:77-123
+59            android:label="@string/search_save_device_activity_label" />
+59-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:29:19-76
+60
+61        <service android:name="edu.hkust.cse.phoneAdapter.context.KnowledgeController" />
+61-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:9-72
+61-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:31:18-61
+62        <service android:name="edu.hkust.cse.phoneAdapter.context.MetaController" />
+62-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:9-67
+62-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:32:18-56
+63        <service android:name="edu.hkust.cse.phoneAdapter.context.FailureManager" />
+63-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:9-67
+63-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:33:18-56
+64        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerAllSensors" />
+64-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:9-77
+64-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:34:18-66
+65        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetooth" />
+65-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:9-78
+65-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:35:18-67
+66        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetoothNoGPS" />
+66-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:36:9-83
+66-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:36:18-72
+67        <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoGPS" />
+67-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:37:9-72
+67-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:37:18-61
+68        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerAllEffectors" />
+68-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:38:9-82
+68-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:38:18-71
+69        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoRingtone" />
+69-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:39:9-80
+69-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:39:18-69
+70        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoRingtoneNoVibration" />
+70-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:40:9-91
+70-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:40:18-80
+71        <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoVibration" />
+71-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:41:9-81
+71-->C:\Users\Bento\source\repos\PhoneAdapter_MicroControllersSA\app\src\main\AndroidManifest.xml:41:18-70
+72    </application>
+73
+74</manifest>

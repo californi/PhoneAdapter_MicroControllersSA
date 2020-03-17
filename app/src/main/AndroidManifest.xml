@@ -30,6 +30,7 @@
 
         <service android:name=".context.KnowledgeController"></service>
         <service android:name=".context.MetaController"></service>
+        <service android:name=".context.FailureManager"></service>
         <service android:name=".context.ContextManagerAllSensors"></service>
         <service android:name=".context.ContextManagerNoBluetooth"></service>
         <service android:name=".context.ContextManagerNoBluetoothNoGPS"></service>
@@ -38,5 +39,6 @@
         <service android:name=".context.AdaptationManagerNoRingtone"></service>
         <service android:name=".context.AdaptationManagerNoRingtoneNoVibration"></service>
         <service android:name=".context.AdaptationManagerNoVibration"></service>
+
     </application>
 </manifest>

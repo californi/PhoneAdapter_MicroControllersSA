@@ -18,7 +18,8 @@
     <application
         android:debuggable="true"
         android:icon="@drawable/icon"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:testOnly="true" >
         <activity android:name="edu.hkust.cse.phoneAdapter.activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,6 +60,7 @@
 
         <service android:name="edu.hkust.cse.phoneAdapter.context.KnowledgeController" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.MetaController" />
+        <service android:name="edu.hkust.cse.phoneAdapter.context.FailureManager" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerAllSensors" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetooth" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetoothNoGPS" />

@@ -33,7 +33,6 @@ public class KnowledgeController extends IntentService {
     public static String mCurrentContextManager;
     public static String mCurrentAdaptationManager;
 
-    private FeedbackLoopUpdateKnowledge mFeedbackLoopUpdateKnowledge;
     private BluetoothAdapter mBtAdapter;
     private Handler mHandler;
 
@@ -48,12 +47,11 @@ public class KnowledgeController extends IntentService {
     public void onCreate() {
         super.onCreate();
 
-        mFeedbackLoopUpdateKnowledge = new KnowledgeController.FeedbackLoopUpdateKnowledge();
         mHandler=new Handler();
 
-
-        Intent mFeedbackLoopUpdateKnowledge = new Intent(this, FeedbackLoopUpdateKnowledge.class);
-        startService(mFeedbackLoopUpdateKnowledge);
+        IntentFilter iFilter = new IntentFilter();
+        iFilter.addAction("edu.hkust.cse.phoneAdapter.sensorsFailure");
+        iFilter.addAction("edu.hkust.cse.phoneAdapter.effectorsFailure");
 
         /**start foreground service**/
         // step 1: instantiate the notification
@@ -79,50 +77,36 @@ public class KnowledgeController extends IntentService {
 
 
     @Override
-    protected void onHandleIntent(Intent arg0){
+    protected void onHandleIntent(final Intent intent){
 
-        int timeMonitoring = 240000;
-        while (true) {
+        Log.i("TESTANDOAQUI", "Knowledge Intent Service" + Thread.currentThread().getName());
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    //do something
-                }});
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                //do something
 
-            try{
-                Thread.sleep(timeMonitoring);
-            } catch(Exception e){
-                Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
+                Log.i("Bento....", "broadcast " + intent.getAction());
+
+                if (intent.getAction().equals("edu.hkust.cse.phoneAdapter.sensorsFailure")) {
+                    mGpsAvailable = intent.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
+                    mBtAvailable = intent.getBooleanExtra(ContextName.BT_AVAILABLE, false);
+                    mCurrentContextManager = intent.getStringExtra(ContextName.CURRENT_CONTEXTMANAGER);
+                    sendBroadcast(intent);
+
+                } else if (intent.getAction().equals("edu.hkust.cse.phoneAdapter.effectorsFailure")) {
+                    mAudioAvailable = intent.getBooleanExtra(ContextName.AUDIO, false);
+                    mvibrationAvailable = intent.getBooleanExtra(ContextName.VIBRATION, false);
+                    mCurrentAdaptationManager = intent.getStringExtra(ContextName.CURRENT_ADAPTATIONMANAGER);
+                    sendBroadcast(intent);
+                } else {
+
+                }
             }
-        }
+
+        });
     }
 
-
-    private class FeedbackLoopUpdateKnowledge extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context c, Intent i) {
-            String action=i.getAction();
-
-
-            if(action.equals("edu.hkust.cse.phoneAdapter.sensorsFailure")){
-                mGpsAvailable = i.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
-                mBtAvailable = i.getBooleanExtra(ContextName.BT_AVAILABLE, false);
-                mCurrentContextManager = i.getStringExtra(ContextName.CURRENT_CONTEXTMANAGER);
-                sendBroadcast(i);
-
-            }else if(action.equals("edu.hkust.cse.phoneAdapter.effectorsFailure")){
-                mAudioAvailable = i.getBooleanExtra(ContextName.AUDIO, false);
-                mvibrationAvailable = i.getBooleanExtra(ContextName.VIBRATION, false);
-                mCurrentAdaptationManager = i.getStringExtra(ContextName.CURRENT_ADAPTATIONMANAGER);
-                sendBroadcast(i);
-            }else{
-
-            }
-        }
-
-    }
 
     public static boolean isRunning(){
         return KnowledgeController.running;
@@ -130,21 +114,7 @@ public class KnowledgeController extends IntentService {
 
     @Override
     public void onDestroy(){
-        try{
-            unregisterReceiver(mFeedbackLoopUpdateKnowledge);
-        } catch(Exception e){
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "Failed to unregister broadcast receiver!", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        /**stop foreground service**/
-        stopForeground(true);
-
-        KnowledgeController.running = false;
-
+        stopSelf();
         super.onDestroy();
     }
 

@@ -32,6 +32,7 @@ public class FailureManager extends IntentService {
     private LocationManager mLocManager;
     private MonitoringBluetoothStatus mMonitoringBTStatusReceiver;
     private BluetoothAdapter mBtAdapter;
+    private SimulatingChanges mSimulatingChanges;
     private Handler mHandler;
     private static boolean running;
 
@@ -64,8 +65,16 @@ public class FailureManager extends IntentService {
 
         registerReceiver(mMonitoringBTStatusReceiver, iFilter);
 
+
         Intent mMonitoringEffectorsIntent =new Intent(this, MonitoringEffectorsStatus.class);
         startService(mMonitoringEffectorsIntent);
+
+        //Simulating data
+        mSimulatingChanges = new SimulatingChanges();
+        IntentFilter iFilterSimulatior = new IntentFilter();
+        iFilterSimulatior.addAction("edu.hkust.cse.phoneAdapter.simulator");
+        registerReceiver(mSimulatingChanges,iFilterSimulatior);
+
 
         /**start foreground service**/
         // step 1: instantiate the notification
@@ -94,11 +103,23 @@ public class FailureManager extends IntentService {
          */
         Context c = this;
 
+        Intent iSimulator = new Intent();
+        iSimulator.setAction("edu.hkust.cse.phoneAdapter.simulator");
+        //i.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
+        sendBroadcast(iSimulator);
 
 
-
-        int timeMonitoring = 120000;
+        int timeMonitoring = 10000;
         while (true) {
+
+            Log.i("Testando onHandleIntent FailureManager", "FailureManager" + Thread.currentThread().getName());
+            Log.i("Dados Failure", "mGpsAvailable: " + mGpsAvailable);
+            Log.i("Dados Failure", "mBtAvailable: " + mBtAvailable);
+            Log.i("Dados Failure", "mAudioAvailable: " + mAudioAvailable);
+            Log.i("Dados Failure", "mBtAvailable: " + mBtAvailable);
+
+
+
 
             Intent contextManagerIntent = new Intent();
             String sensorsAction = "edu.hkust.cse.phoneAdapter.sensorsFailure";
@@ -111,6 +132,7 @@ public class FailureManager extends IntentService {
                 sendBroadcast(contextManagerIntent);
 
             }else if(!mGpsAvailable && mBtAvailable){
+
                 contextManagerIntent.setAction(sensorsAction);
                 contextManagerIntent.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
                 contextManagerIntent.putExtra(ContextName.BT_AVAILABLE, mBtAvailable);
@@ -119,13 +141,17 @@ public class FailureManager extends IntentService {
 
             }
             else if(!mGpsAvailable && !mBtAvailable) {
-                contextManagerIntent.setAction(sensorsAction);
-                contextManagerIntent.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
-                contextManagerIntent.putExtra(ContextName.BT_AVAILABLE, mBtAvailable);
-                contextManagerIntent.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "NoBluetoothNoGPS");
-                sendBroadcast(contextManagerIntent);
 
+                Log.i("Dados Failure", "BOVESPA DERRETEU " + mBtAvailable);
+
+                Intent localIntent = new Intent(this, KnowledgeController.class);
+                localIntent.setAction("edu.hkust.cse.phoneAdapter.sensorsFailure");
+                localIntent.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
+                localIntent.putExtra(ContextName.BT_AVAILABLE, mBtAvailable);
+                localIntent.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "NoBluetoothNoGPS");
+                startService(localIntent);
             }else{
+
                 contextManagerIntent.setAction(sensorsAction);
                 contextManagerIntent.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
                 contextManagerIntent.putExtra(ContextName.BT_AVAILABLE, mBtAvailable);
@@ -168,6 +194,46 @@ public class FailureManager extends IntentService {
                 Thread.sleep(timeMonitoring);
             } catch(Exception e){
                 Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
+            }
+        }
+    }
+
+    protected class SimulatingChanges extends BroadcastReceiver{
+
+        public boolean flag = true;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(intent.getAction().equals("edu.hkust.cse.phoneAdapter.simulator")){
+                while (true){
+                    Log.i("Testando onHandleIntent SimulatingChanges", "SimulatingChanges" + Thread.currentThread().getName());
+                    Log.i("Testando mGpsAvailable", "Value: " + mGpsAvailable);
+                    Log.i("Testando mBtAvailable", "Value: " + mBtAvailable);
+                    Log.i("Testando mvibrationAvailable", "Value: " + mvibrationAvailable);
+                    Log.i("Testando mAudioAvailable", "Value: " + mAudioAvailable);
+
+
+                    if(flag){
+                        mGpsAvailable = true;
+                        mBtAvailable = true;
+                        mvibrationAvailable = true;
+                        mAudioAvailable = true;
+                    }else{
+                        mGpsAvailable = false;
+                        mBtAvailable = false;
+                        mvibrationAvailable = false;
+                        mAudioAvailable = false;
+                    }
+
+                    flag = !flag;
+
+                    try{
+                        Thread.sleep(7000);
+                    } catch(Exception e){
+                        Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
+                    }
+                }
             }
         }
     }
@@ -243,6 +309,8 @@ public class FailureManager extends IntentService {
             }
         }
     }
+
+
 
     /**
      * The Class MonitoringEffectorsStatus.

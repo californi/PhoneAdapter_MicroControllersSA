@@ -13,6 +13,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import edu.hkust.cse.phoneAdapter.R;
 import edu.hkust.cse.phoneAdapter.activity.MainActivity;
@@ -28,6 +30,8 @@ public class MetaController extends IntentService {
     private static boolean mVibrationAvailable;
     private static String mCurrentAdaptationManager;
 
+
+
     /**
      * Instantiates a new context manager.
      */
@@ -41,8 +45,21 @@ public class MetaController extends IntentService {
 
         mFeedbackLoopMetaControllerReceiver = new FeedbackLoopMetaController();
         IntentFilter iFilter = new IntentFilter();
-        iFilter.addAction("edu.hkust.cse.phoneAdapter.knowledge");
+        iFilter.addAction("edu.hkust.cse.phoneAdapter.sensorsFailure");
+        iFilter.addAction("edu.hkust.cse.phoneAdapter.effectorsFailure");
         registerReceiver(mFeedbackLoopMetaControllerReceiver, iFilter);
+
+        //Intent knowledgeControllerIntent = new Intent(this, KnowledgeController.class);
+        //startService(knowledgeControllerIntent);
+
+        Intent failureManagerIntent = new Intent(this, FailureManager.class);
+        startService(failureManagerIntent);
+
+        Intent mContextManagerAllSensors = new Intent(this, ContextManagerAllSensors.class);
+        startService(mContextManagerAllSensors);
+
+        Intent mAdaptationManagerAllEffectors = new Intent(this, AdaptationManagerAllEffectors.class);
+        startService(mAdaptationManagerAllEffectors);
 
         /**start foreground service**/
         // step 1: instantiate the notification
@@ -68,7 +85,16 @@ public class MetaController extends IntentService {
     @Override
     protected void onHandleIntent(Intent arg0){
 
+
+
         while(MetaController.isRunning()){
+            Log.i("Testando onHandleIntent MetaController", "Meta Controller" + Thread.currentThread().getName());
+
+            try{
+                Thread.sleep(10000);
+            } catch(Exception e){
+                Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
+            }
 
         }
 
@@ -83,12 +109,18 @@ public class MetaController extends IntentService {
         public void onReceive(Context c, Intent i) {
             String action = i.getAction();
 
+            Log.i("Testando FeedbackLoopMetaController broadcastreceiver", "broadcastreceiver" + Thread.currentThread().getName());
+
             if(action.equals("edu.hkust.cse.phoneAdapter.sensorsFailure")){
+
+                Log.i("BOVES - Testando sensorsFailure broadcastreceiver", "sensorsFailure" + Thread.currentThread().getName());
+
                 mGpsAvailable = i.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
                 mBtAvailable = i.getBooleanExtra(ContextName.BT_AVAILABLE, false);
                 mCurrentContextManager = i.getStringExtra(ContextName.CURRENT_CONTEXTMANAGER);
                 if(mCurrentContextManager.equals("NoBluetooth")){
                     Intent mContextManagerNoBluetooth = new Intent(c, ContextManagerNoBluetooth.class);
+
                     startService(mContextManagerNoBluetooth);
                 }else if(mCurrentContextManager.equals("NoGPS")){
                     Intent mContextManagerNoGPS = new Intent(c, ContextManagerNoGPS.class);
@@ -101,7 +133,9 @@ public class MetaController extends IntentService {
                     startService(mContextManagerAllSensors);
                 }
             }else if(action.equals("edu.hkust.cse.phoneAdapter.effectorsFailure")){
-                Intent adaptationManagerIntent = new Intent();
+
+                Log.i(" BOVES -  Testando effectorsFailure broadcastreceiver", "effectorsFailure" + Thread.currentThread().getName());
+
                 mAudioAvailable = i.getBooleanExtra(ContextName.AUDIO, false);
                 mVibrationAvailable = i.getBooleanExtra(ContextName.VIBRATION, false);
                 mCurrentAdaptationManager = i.getStringExtra(ContextName.CURRENT_ADAPTATIONMANAGER);
@@ -128,6 +162,41 @@ public class MetaController extends IntentService {
     }
 
 
+    public void EnableDisableReceiversContextManager(IntentService currentContextManager, String name){
+        if(name.equals("NoBluetooth")){
+            currentContextManager = new ContextManagerNoBluetooth();
+            IntentFilter iFilter = new IntentFilter("edu.hkust.cse.phoneAdapter.newContext");
+            iFilter.addAction("edu.hkust.cse.phoneAdapter.ruleChange");
+            iFilter.addAction("edu.hkust.cse.phoneAdapter.stopService");
+
+            if(mContextManagerNoGPS != null) {
+                //unregisterReceiver(mContextManagerNoGPS);
+            }else if(mContextManagerNoBluetoothNoGPS != null) {
+                //unregisterReceiver(mContextManagerNoBluetoothNoGPS);
+            }else {
+                //unregisterReceiver(mContextManagerAllSensors);
+
+                //registerReceiver(currentContextManager, iFilter);
+            }
+        }else if(name.equals("NoGPS")){
+            //Intent mContextManagerNoGPS = new Intent(c, ContextManagerNoGPS.class);
+            //startService(mContextManagerNoGPS);
+        }else if(name == "NoBluetoothNoGPS"){
+            //Intent mContextManagerNoBluetoothGPS = new Intent(c, ContextManagerNoBluetoothNoGPS.class);
+            //startService(mContextManagerNoBluetoothGPS);
+        }else{
+            //Intent mContextManagerAllSensors = new Intent(c, ContextManagerAllSensors.class);
+            //startService(mContextManagerAllSensors);
+        }
+    }
+
+    public void EnableDisableReceiversAdaptationManager(IntentService currentAdaptationManager){
+
+        //unregisterReceiver(mReceiver);
+    }
+
+
+
     @Override
     public void onDestroy(){
         /**stop foreground service**/
@@ -139,6 +208,10 @@ public class MetaController extends IntentService {
     }
 
 
+    private ContextManagerNoBluetooth mContextManagerNoBluetooth;
+    private ContextManagerNoGPS mContextManagerNoGPS;
+    private ContextManagerNoBluetoothNoGPS mContextManagerNoBluetoothNoGPS;
+    private ContextManagerAllSensors mContextManagerAllSensors;
 
     public static boolean isRunning(){
         return MetaController.running;

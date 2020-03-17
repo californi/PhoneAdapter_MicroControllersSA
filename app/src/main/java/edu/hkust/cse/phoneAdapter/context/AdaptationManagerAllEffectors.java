@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 import edu.hkust.cse.phoneAdapter.R;
 import edu.hkust.cse.phoneAdapter.activity.MainActivity;
@@ -236,6 +237,9 @@ public class AdaptationManagerAllEffectors extends IntentService {
 
 		@Override
 		public void onReceive(Context c, Intent i) {
+
+            Log.i("Testando onReceive MyBroadcastReceiver AdaptataionManagerAllEffectors", "AdaptataionManagerAllEffectors" + Thread.currentThread().getName());
+
 			String action=i.getAction();
 			if(action.equals("edu.hkust.cse.phoneAdapter.newContext")){
 				/* handle new context, perform adaptation (on such context changes) */

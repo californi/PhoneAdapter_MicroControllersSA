@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
          */
 
         // METACONTROLLER HERE
-		Intent metaControllerIntent=new Intent(this, MetaController.class);
+		Intent metaControllerIntent = new Intent(this, MetaController.class);
 		startService(metaControllerIntent);
 
     }
