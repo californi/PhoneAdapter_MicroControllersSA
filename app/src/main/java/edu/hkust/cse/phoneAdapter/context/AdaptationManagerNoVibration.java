@@ -265,11 +265,31 @@ public class AdaptationManagerNoVibration extends IntentService {
                                     Toast.makeText(getApplicationContext(), "only one rule satisfied,perform adaptation", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            if(volume>0){
-                                mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                                mAudioManager.setStreamVolume(AudioManager.STREAM_RING, volume, AudioManager.FLAG_SHOW_UI);
-                            } else{
-                                mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
+
+                            try {
+                                if(volume>0){
+                                    mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                                    mAudioManager.setStreamVolume(AudioManager.STREAM_RING, volume, AudioManager.FLAG_SHOW_UI);
+                                } else{
+                                    mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
+                                }
+
+                                //updating Knowledge
+                                Intent intentActuatorData = new Intent();
+                                intentActuatorData.setAction("edu.hkust.cse.phoneAdapter.newActuatorData");
+                                intentActuatorData.putExtra(ContextName.AUDIO, true);
+                                intentActuatorData.putExtra(ContextName.VIBRATION, false);
+                                intentActuatorData.putExtra(ContextName.CURRENT_ADAPTATIONMANAGER, "NoVibration");
+                                sendBroadcast(intentActuatorData);
+
+                            }catch(RuntimeException e){
+                                //updating Knowledge
+                                Intent intentActuatorData = new Intent();
+                                intentActuatorData.setAction("edu.hkust.cse.phoneAdapter.newActuatorData");
+                                intentActuatorData.putExtra(ContextName.AUDIO, false);
+                                intentActuatorData.putExtra(ContextName.VIBRATION, false);
+                                intentActuatorData.putExtra(ContextName.CURRENT_ADAPTATIONMANAGER, "NoVibration");
+                                sendBroadcast(intentActuatorData);
                             }
 
                             if(airplaneModeOn==1){
@@ -331,17 +351,33 @@ public class AdaptationManagerNoVibration extends IntentService {
                                         Toast.makeText(getApplicationContext(), "only one rule with highest priority, perform actions", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                                if(volume>0){
-                                    mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                                    mAudioManager.setStreamVolume(AudioManager.STREAM_RING, volume, AudioManager.FLAG_SHOW_UI);
-                                } else{
-                                    mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
+
+                                try{
+                                    if(volume>0){
+                                        mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                                        mAudioManager.setStreamVolume(AudioManager.STREAM_RING, volume, AudioManager.FLAG_SHOW_UI);
+                                    } else{
+                                        mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
+                                    }
+
+                                    //updating Knowledge
+                                    Intent intentActuatorData = new Intent();
+                                    intentActuatorData.setAction("edu.hkust.cse.phoneAdapter.newActuatorData");
+                                    intentActuatorData.putExtra(ContextName.AUDIO, true);
+                                    intentActuatorData.putExtra(ContextName.VIBRATION, false);
+                                    intentActuatorData.putExtra(ContextName.CURRENT_ADAPTATIONMANAGER, "NoVibration");
+                                    sendBroadcast(intentActuatorData);
+
+                                }catch(RuntimeException e){
+                                    //updating Knowledge
+                                    Intent intentActuatorData = new Intent();
+                                    intentActuatorData.setAction("edu.hkust.cse.phoneAdapter.newActuatorData");
+                                    intentActuatorData.putExtra(ContextName.AUDIO, false);
+                                    intentActuatorData.putExtra(ContextName.VIBRATION, false);
+                                    intentActuatorData.putExtra(ContextName.CURRENT_ADAPTATIONMANAGER, "NoVibration");
+                                    sendBroadcast(intentActuatorData);
                                 }
-                                if(vibration==1){
-                                    mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
-                                } else{
-                                    mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
-                                }
+
                                 if(airplaneModeOn==1){
                                     if(Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 0){
                                         Settings.System.putInt(getContentResolver(),Settings.System.AIRPLANE_MODE_ON, 1);
@@ -512,7 +548,12 @@ public class AdaptationManagerNoVibration extends IntentService {
                 AdaptationManagerNoVibration.Filter filter=fList.get(k);
                 switch(filter.contextType){
                     case ContextType.GPS_ISVALID:
-                        int value=Integer.parseInt(filter.contextValue);
+                        //int value=Integer.parseInt(filter.contextValue);
+                        int value = 0; //default false
+                        if(filter.contextValue.toLowerCase().equals("true"))
+                            value = 1;
+                        else
+                            value = 0;
                         boolean bool=(value==1)?true:false;
                         if(filter.contextOp==ContextOperator.EQUAL){
                             if(gpsAvailable!=bool){

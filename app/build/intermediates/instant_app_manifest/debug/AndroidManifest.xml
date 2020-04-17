@@ -9,12 +9,17 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="8" />
 
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
     <application
         android:debuggable="true"
@@ -59,9 +64,7 @@
             android:name="edu.hkust.cse.phoneAdapter.activity.SearchAndSaveBTDevice"
             android:label="@string/search_save_device_activity_label" />
 
-        <service android:name="edu.hkust.cse.phoneAdapter.context.KnowledgeController" />
-        <service android:name="edu.hkust.cse.phoneAdapter.context.MetaController" />
-        <service android:name="edu.hkust.cse.phoneAdapter.context.FailureManager" />
+        <service android:name="edu.hkust.cse.phoneAdapter.context.SimulatingChanges" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerAllSensors" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetooth" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetoothNoGPS" />
@@ -70,6 +73,9 @@
         <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoRingtone" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoRingtoneNoVibration" />
         <service android:name="edu.hkust.cse.phoneAdapter.context.AdaptationManagerNoVibration" />
+
+        <receiver android:name="edu.hkust.cse.phoneAdapter.context.KnowledgeBroadcastReceiver" />
+        <receiver android:name="edu.hkust.cse.phoneAdapter.context.MetaControllerBroadcastReceiver" />
     </application>
 
 </manifest>

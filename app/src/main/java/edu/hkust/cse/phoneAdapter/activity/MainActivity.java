@@ -3,7 +3,9 @@ package edu.hkust.cse.phoneAdapter.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +14,14 @@ import android.widget.Button;
 
 import edu.hkust.cse.phoneAdapter.R;
 import edu.hkust.cse.phoneAdapter.context.AdaptationManagerAllEffectors;
-import edu.hkust.cse.phoneAdapter.context.MetaController;
+import edu.hkust.cse.phoneAdapter.context.ContextManagerAllSensors;
+import edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetooth;
+import edu.hkust.cse.phoneAdapter.context.ContextManagerNoBluetoothNoGPS;
+import edu.hkust.cse.phoneAdapter.context.ContextManagerNoGPS;
+import edu.hkust.cse.phoneAdapter.context.FailureManager;
+import edu.hkust.cse.phoneAdapter.context.KnowledgeBroadcastReceiver;
+import edu.hkust.cse.phoneAdapter.context.MetaControllerBroadcastReceiver;
+import edu.hkust.cse.phoneAdapter.context.SimulatingChanges;
 
 /**
  * The main activity of PhoneAdapter.
@@ -34,6 +43,8 @@ public class MainActivity extends Activity {
     
     /** The record context button. */
     private Button recordContextBtn;
+    KnowledgeBroadcastReceiver mKnowledgeBroadcastReceiver;
+    MetaControllerBroadcastReceiver mMetaControllerBroadcastReceiver;
     
     
     @Override
@@ -63,10 +74,39 @@ public class MainActivity extends Activity {
          * (2) AdaptationManagerAllEffectors evaluates active rules upon context change, and triggers the actions specified in the satisfied rule
          */
 
-        // METACONTROLLER HERE
-		Intent metaControllerIntent = new Intent(this, MetaController.class);
-		startService(metaControllerIntent);
+        //Registering events for Knowledge
+		IntentFilter iFilterKnowledge = new IntentFilter();
+		//Messages sent by the contextManagers
+		iFilterKnowledge.addAction("edu.hkust.cse.phoneAdapter.newContext");
+		//Messages sent by the AdaptationManagers
+		iFilterKnowledge.addAction("edu.hkust.cse.phoneAdapter.newActuators");
+		mKnowledgeBroadcastReceiver = new KnowledgeBroadcastReceiver();
+		registerReceiver(mKnowledgeBroadcastReceiver, iFilterKnowledge);
 
+
+		//Registering events for MetaController
+		//IntentFilter iFilterFailures = new IntentFilter();
+		//Messages sent by the contextManagers
+		//iFilterFailures.addAction("edu.hkust.cse.phoneAdapter.sensorsFailure");
+		//Messages sent by the AdaptationManagers
+		//iFilterFailures.addAction("edu.hkust.cse.phoneAdapter.effectorsFailure");
+		//mMetaControllerBroadcastReceiver = new MetaControllerBroadcastReceiver();
+		//registerReceiver(mMetaControllerBroadcastReceiver, iFilterFailures);
+
+		Intent contextManagerAllSensorsIntent = new Intent(this, ContextManagerAllSensors.class);
+		startService(contextManagerAllSensorsIntent);
+
+		Intent adaptationManagerAllSensorsIntent = new Intent(this, AdaptationManagerAllEffectors.class);
+		startService(adaptationManagerAllSensorsIntent);
+
+		Intent failureManagerIntent = new Intent(this, FailureManager.class);
+		startService(failureManagerIntent);
+
+		Intent SimulatingChangesIntent = new Intent(this, SimulatingChanges.class);
+		startService(SimulatingChangesIntent);
+
+
+		Log.i("Testing MainActivity", "MainActivity" + Thread.currentThread().getName());
     }
     
     @Override
@@ -169,20 +209,23 @@ public class MainActivity extends Activity {
 			}
 		});
    }  
-    
+
    private void startService(){
-	   if(!MetaController.isRunning()){
-		   Intent metaControllerIntent=new Intent(this, MetaController.class);
-	       startService(metaControllerIntent);
+    	// Case there is no context manager running, AllSensors should be started.
+	   if(!ContextManagerAllSensors.isRunning() && !ContextManagerNoGPS.isRunning() && !ContextManagerNoBluetoothNoGPS.isRunning() && !ContextManagerNoBluetooth.isRunning()){
+		   Intent contextManagerAllSensorsIntent = new Intent(this, ContextManagerAllSensors.class);
+		   startService(contextManagerAllSensorsIntent);
 	   }
-	   if(!AdaptationManagerAllEffectors.isRunning()){
-		   Intent adaptationManagerIntent=new Intent(this, AdaptationManagerAllEffectors.class);
-	       startService(adaptationManagerIntent);
+
+	   // Case FailureManager is not running, it should be started.
+	   if(!FailureManager.isRunning()){
+		   Intent failureManagerIntent = new Intent(this, FailureManager.class);
+		   startService(failureManagerIntent);
 	   }
    }
    
    private void stopService(){
-	   if(MetaController.isRunning() || AdaptationManagerAllEffectors.isRunning()){
+	   if(FailureManager.isRunning() || ContextManagerAllSensors.isRunning() || ContextManagerNoGPS.isRunning() || ContextManagerNoBluetoothNoGPS.isRunning() || ContextManagerNoBluetooth.isRunning()){
 		   /* stop the ContextManager and Adaptation Manager service before destroying the main activity */
 	    	Intent i=new Intent("edu.hkust.cse.phoneAdapter.stopService");
 	    	sendBroadcast(i);

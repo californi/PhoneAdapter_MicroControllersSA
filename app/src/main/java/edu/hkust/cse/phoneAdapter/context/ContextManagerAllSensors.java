@@ -176,7 +176,7 @@ public class ContextManagerAllSensors extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent arg0) {
 
-        Log.i("Testando onHandleIntent ContextManagerAllSensors", "ContextManagerAllSensors" + Thread.currentThread().getName());
+        Log.i("Testing", "onHandleIntent ContextManagerAllSensors ContextManagerAllSensors" + Thread.currentThread().getName());
 
 		/*
 		 * collect contexts every a while and broadcast the context change
@@ -241,6 +241,7 @@ public class ContextManagerAllSensors extends IntentService {
 					/* broadcast new context*/
 					Intent i=new Intent();
 					i.setAction("edu.hkust.cse.phoneAdapter.newContext");
+					i.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "AllSensors");
 					i.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
 					i.putExtra(ContextName.GPS_LOCATION, mLocation);
 					i.putExtra(ContextName.GPS_SPEED, mSpeed);
@@ -289,9 +290,9 @@ public class ContextManagerAllSensors extends IntentService {
 				}
 			});
 			try{
-				Thread.sleep(120000);
+				Thread.sleep(1000);
 			} catch(Exception e){
-				Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
+				Log.e("error", "Thread sleep exception");
 			}
 		}
 	}
@@ -358,10 +359,16 @@ public class ContextManagerAllSensors extends IntentService {
 				mBtDeviceList=new ArrayList<String>();
 			} else if( action.equals(BluetoothDevice.ACTION_FOUND)){
 				BluetoothDevice device=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+				Log.i("Testing", "Getting bluetooth: " + device.getName() + " - " +  device.getAddress() + Thread.currentThread().getName());
+
 				if(!listContainsMac(mBtDeviceList, device.getAddress())){
 					mBtDeviceList.add(device.getAddress());
 				}
 			} else if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)){
+			} else if(action.equals(BluetoothAdapter.ACTION_REQUEST_ENABLE)){
+				Log.i("Testing", "Testing BT CONTEXTMANAGER ACTION_REQUEST_ENABLE " + Thread.currentThread().getName());
+			} else if(action.equals(BluetoothAdapter.STATE_OFF)){
+
 			} else if(action.equals("edu.hkust.cse.phoneAdapter.stopContextManager")){
 				mStop=true;
 				stopSelf();
@@ -378,8 +385,6 @@ public class ContextManagerAllSensors extends IntentService {
 	 * component's <code>addMyLocationListener<code> method. When
 	 * the myLocation event occurs, that object's appropriate
 	 * method is invoked.
-	 *
-	 * @see MyLocationEvent
 	 */
 	private class MyLocationListener implements LocationListener{
 
@@ -389,7 +394,9 @@ public class ContextManagerAllSensors extends IntentService {
 			 * sense the current location, caculate speed, and set the current time
 			 */
 			mLocation=loc.getLatitude()+","+loc.getLongitude();
-			
+
+			Log.i("Testing", "Testing quarentena aqui...: " + mLocation  + Thread.currentThread().getName());
+
 			/* calculate speed and update current time */
 			long curTime=System.currentTimeMillis();
 			if(mLastTime!=0 && mLastLocation!=null){
@@ -405,7 +412,8 @@ public class ContextManagerAllSensors extends IntentService {
 
 		@Override
 		public void onProviderDisabled(String arg0) {
-			/* set mLocation to null, set last location to null and update last time to 0 */			
+			/* set mLocation to null, set last location to null and update last time to 0 */
+			Log.i("Testing", "Testing GPS CONTEXTMANAGER Disabled" + Thread.currentThread().getName());
 			mGpsAvailable=false;
 			mLocation=null;
 			mLastLocation=null;
@@ -414,12 +422,13 @@ public class ContextManagerAllSensors extends IntentService {
 
 		@Override
 		public void onProviderEnabled(String arg0) {
+			Log.i("Testing", "Testing GPS CONTEXTMANAGER Enabled" + Thread.currentThread().getName());
 			mGpsAvailable=true;
 		}
 
 		@Override
 		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-			
+			Log.i("Testing", "Changing status..." + Thread.currentThread().getName());
 		}
 	}
 }

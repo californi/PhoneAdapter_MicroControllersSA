@@ -221,6 +221,7 @@ public class ContextManagerNoBluetooth extends IntentService {
                     /* broadcast new context*/
                     Intent i=new Intent();
                     i.setAction("edu.hkust.cse.phoneAdapter.newContext");
+                    i.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "NoBluetooth");
                     i.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
                     i.putExtra(ContextName.GPS_LOCATION, mLocation);
                     i.putExtra(ContextName.GPS_SPEED, mSpeed);
@@ -263,7 +264,7 @@ public class ContextManagerNoBluetooth extends IntentService {
             try{
                 Thread.sleep(120000);
             } catch(Exception e){
-                Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
+                Log.e("error", "Thread sleep exception");
             }
         }
     }
@@ -329,7 +330,6 @@ public class ContextManagerNoBluetooth extends IntentService {
      * the myLocation event occurs, that object's appropriate
      * method is invoked.
      *
-     * @see MyLocationEvent
      */
     private class MyLocationListener implements LocationListener{
 

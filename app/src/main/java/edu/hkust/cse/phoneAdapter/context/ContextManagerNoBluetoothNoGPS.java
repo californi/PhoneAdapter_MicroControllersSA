@@ -119,6 +119,10 @@ public class ContextManagerNoBluetoothNoGPS extends IntentService {
     }
 
 
+    public static boolean isRunning(){
+        return ContextManagerNoBluetoothNoGPS.running;
+    }
+
     /**
      * The Class MyBroadcastReceiver.
      */
@@ -212,6 +216,7 @@ public class ContextManagerNoBluetoothNoGPS extends IntentService {
                     /* broadcast new context*/
                     Intent i=new Intent();
                     i.setAction("edu.hkust.cse.phoneAdapter.newContext");
+                    i.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "NoBluetoothNoGPS");
                     i.putExtra(ContextName.TIME,mTime);
                     i.putExtra(ContextName.WEEKDAY, mWeekday);
                     sendBroadcast(i);
@@ -245,7 +250,7 @@ public class ContextManagerNoBluetoothNoGPS extends IntentService {
             try{
                 Thread.sleep(120000);
             } catch(Exception e){
-                Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
+                Log.e("error", "Thread sleep exception");
             }
         }
     }

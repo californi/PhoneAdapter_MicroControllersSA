@@ -227,12 +227,12 @@ public class ContextManagerNoGPS extends IntentService {
                     /* broadcast new context*/
                     Intent i=new Intent();
                     i.setAction("edu.hkust.cse.phoneAdapter.newContext");
+                    i.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "NoGPS");
                     i.putExtra(ContextName.BT_DEVICE_LIST, transformListToArray(mBtDeviceList));
                     i.putExtra(ContextName.BT_COUNT, mBtDeviceList.size());
                     i.putExtra(ContextName.TIME,mTime);
                     i.putExtra(ContextName.WEEKDAY, mWeekday);
                     sendBroadcast(i);
-
                     /* log context data */
                     StringBuffer sb = new StringBuffer();
                     for(int index=0; index< mBtDeviceList.size(); index++){
@@ -268,7 +268,7 @@ public class ContextManagerNoGPS extends IntentService {
             try{
                 Thread.sleep(120000);
             } catch(Exception e){
-                Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
+                Log.e("error", "Thread sleep exception");
             }
         }
     }

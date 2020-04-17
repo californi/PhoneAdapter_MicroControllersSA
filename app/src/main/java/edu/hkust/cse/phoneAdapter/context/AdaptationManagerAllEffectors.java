@@ -238,7 +238,7 @@ public class AdaptationManagerAllEffectors extends IntentService {
 		@Override
 		public void onReceive(Context c, Intent i) {
 
-            Log.i("Testando onReceive MyBroadcastReceiver AdaptataionManagerAllEffectors", "AdaptataionManagerAllEffectors" + Thread.currentThread().getName());
+            Log.i("Testing", "onReceive MyBroadcastReceiver AdaptataionManagerAllEffectors" + Thread.currentThread().getName());
 
 			String action=i.getAction();
 			if(action.equals("edu.hkust.cse.phoneAdapter.newContext")){
@@ -270,36 +270,61 @@ public class AdaptationManagerAllEffectors extends IntentService {
 								
 								@Override
 								public void run() {
-									Toast.makeText(getApplicationContext(), "only one rule satisfied,perform adaptation", Toast.LENGTH_SHORT).show();
+								Toast.makeText(getApplicationContext(), "only one rule satisfied,perform adaptation", Toast.LENGTH_SHORT).show();
 								}
 							});
-							if(volume>0){
-								mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-								mAudioManager.setStreamVolume(AudioManager.STREAM_RING, volume, AudioManager.FLAG_SHOW_UI);
-							} else{
-								mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
-							}
-							if(vibration==1){
-								mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
-							} else{
-								mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
-							}
-							if(airplaneModeOn==1){
-								 if(Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 0){
-									 Settings.System.putInt(getContentResolver(),Settings.System.AIRPLANE_MODE_ON, 1);
-								     Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-								     intent.putExtra("state", true);
-								     sendBroadcast(intent);
-								 }
-							        
-							} else{
-								if(Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1){
-									Settings.System.putInt(getContentResolver(),Settings.System.AIRPLANE_MODE_ON, 0);
-								    Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-								    intent.putExtra("state", false);
-								    sendBroadcast(intent);
+
+							try{
+
+								if(volume>0){
+									mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+									mAudioManager.setStreamVolume(AudioManager.STREAM_RING, volume, AudioManager.FLAG_SHOW_UI);
+								} else{
+									mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
 								}
+								if(vibration==1){
+									mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
+								} else{
+									mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
+								}
+
+								//updating Knowledge
+								Intent intentActuatorData = new Intent();
+								intentActuatorData.setAction("edu.hkust.cse.phoneAdapter.newActuatorData");
+								intentActuatorData.putExtra(ContextName.AUDIO, true);
+								intentActuatorData.putExtra(ContextName.VIBRATION, true);
+								intentActuatorData.putExtra(ContextName.CURRENT_ADAPTATIONMANAGER, "AllEffectors");
+								sendBroadcast(intentActuatorData);
+
+								if(airplaneModeOn==1){
+									if(Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 0){
+										Settings.System.putInt(getContentResolver(),Settings.System.AIRPLANE_MODE_ON, 1);
+										Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+										intent.putExtra("state", true);
+										sendBroadcast(intent);
+									}
+
+								} else{
+									if(Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1){
+										Settings.System.putInt(getContentResolver(),Settings.System.AIRPLANE_MODE_ON, 0);
+										Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+										intent.putExtra("state", false);
+										sendBroadcast(intent);
+									}
+								}
+
+							}catch(RuntimeException e){
+
+								//updating Knowledge
+								Intent intentActuatorData = new Intent();
+								intentActuatorData.setAction("edu.hkust.cse.phoneAdapter.newActuatorData");
+								intentActuatorData.putExtra(ContextName.AUDIO, false);
+								intentActuatorData.putExtra(ContextName.VIBRATION, false);
+								intentActuatorData.putExtra(ContextName.CURRENT_ADAPTATIONMANAGER, "AllEffectors");
+								sendBroadcast(intentActuatorData);
 							}
+
+
 							mCurProfile=satisfiedRuleList.get(0).newProfile;
 							mCurRuleList=new ArrayList<Rule>();
 							for(int j=0;j<mRuleList.size();j++){
@@ -340,36 +365,59 @@ public class AdaptationManagerAllEffectors extends IntentService {
 									
 									@Override
 									public void run() {
-										Toast.makeText(getApplicationContext(), "only one rule with highest priority, perform actions", Toast.LENGTH_SHORT).show();
+									Toast.makeText(getApplicationContext(), "only one rule with highest priority, perform actions", Toast.LENGTH_SHORT).show();
 									}
 								});
-								if(volume>0){
-									mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-									mAudioManager.setStreamVolume(AudioManager.STREAM_RING, volume, AudioManager.FLAG_SHOW_UI);
-								} else{
-									mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
-								}
-								if(vibration==1){
-									mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
-								} else{
-									mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
-								}
-								if(airplaneModeOn==1){
-									 if(Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 0){
-										 Settings.System.putInt(getContentResolver(),Settings.System.AIRPLANE_MODE_ON, 1);
-									     Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-									     intent.putExtra("state", true);
-									     sendBroadcast(intent);
-									 }
-								        
-								} else{
-									if(Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1){
-										Settings.System.putInt(getContentResolver(),Settings.System.AIRPLANE_MODE_ON, 0);
-									    Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-									    intent.putExtra("state", false);
-									    sendBroadcast(intent);
+
+								try{
+
+									if(volume>0){
+										mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+										mAudioManager.setStreamVolume(AudioManager.STREAM_RING, volume, AudioManager.FLAG_SHOW_UI);
+									} else{
+										mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
+									}
+									if(vibration==1){
+										mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
+									} else{
+										mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
+									}
+
+									//updating Knowledge
+									Intent intentActuatorData = new Intent();
+									intentActuatorData.setAction("edu.hkust.cse.phoneAdapter.newActuatorData");
+									intentActuatorData.putExtra(ContextName.AUDIO, true);
+									intentActuatorData.putExtra(ContextName.VIBRATION, true);
+									intentActuatorData.putExtra(ContextName.CURRENT_ADAPTATIONMANAGER, "AllEffectors");
+									sendBroadcast(intentActuatorData);
+
+									if(airplaneModeOn==1){
+										 if(Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 0){
+											 Settings.System.putInt(getContentResolver(),Settings.System.AIRPLANE_MODE_ON, 1);
+											 Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+											 intent.putExtra("state", true);
+											 sendBroadcast(intent);
+										 }
+
+									} else{
+										if(Settings.System.getInt(getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1){
+											Settings.System.putInt(getContentResolver(),Settings.System.AIRPLANE_MODE_ON, 0);
+											Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+											intent.putExtra("state", false);
+											sendBroadcast(intent);
+										}
 									}
 								}
+								catch(RuntimeException e){
+									//updating Knowledge
+									Intent intentActuatorData = new Intent();
+									intentActuatorData.setAction("edu.hkust.cse.phoneAdapter.newActuatorData");
+									intentActuatorData.putExtra(ContextName.AUDIO, false);
+									intentActuatorData.putExtra(ContextName.VIBRATION, false);
+									intentActuatorData.putExtra(ContextName.CURRENT_ADAPTATIONMANAGER, "AllEffectors");
+									sendBroadcast(intentActuatorData);
+								}
+
 								mCurProfile=candidate.get(0).newProfile;
 								mCurRuleList=new ArrayList<Rule>();
 								for(int j=0;j<mRuleList.size();j++){
@@ -524,7 +572,13 @@ public class AdaptationManagerAllEffectors extends IntentService {
 				Filter filter=fList.get(k);
 				switch(filter.contextType){
 				case ContextType.GPS_ISVALID:
-					int value=Integer.parseInt(filter.contextValue);
+					//int value=Integer.parseInt(filter.contextValue);
+					int value = 0; //default false
+					if(filter.contextValue.toLowerCase().equals("true"))
+						value = 1;
+					else
+						value = 0;
+
 					boolean bool=(value==1)?true:false;
 					if(filter.contextOp==ContextOperator.EQUAL){
 						if(gpsAvailable!=bool){

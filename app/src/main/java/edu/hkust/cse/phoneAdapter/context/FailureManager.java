@@ -19,6 +19,8 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import edu.hkust.cse.phoneAdapter.R;
 import edu.hkust.cse.phoneAdapter.activity.MainActivity;
 
@@ -28,12 +30,11 @@ public class FailureManager extends IntentService {
     private static boolean mBtAvailable;
     private static boolean mAudioAvailable;
     private static boolean mvibrationAvailable;
-    private LocationListener monitoringLocationStatus;
-    private LocationManager mLocManager;
-    private MonitoringBluetoothStatus mMonitoringBTStatusReceiver;
+    private static String mCurrentContextManager = "AllSensors";
+    private static String mCurrentAdaptationManager = "AllEffectors";
+    private ArrayList<String> mBtDeviceList;
     private BluetoothAdapter mBtAdapter;
-    private SimulatingChanges mSimulatingChanges;
-    private Handler mHandler;
+    private MonitorBluetoothReceiver mMonitorBluetoothReceiver;
     private static boolean running;
 
     public FailureManager() {
@@ -44,17 +45,16 @@ public class FailureManager extends IntentService {
     public void onCreate() {
         super.onCreate();
 
-        //GPS Monitoring
-        mLocManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        monitoringLocationStatus = new FailureManager.MonitoringLocationStatus();
-        mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, monitoringLocationStatus);
+        //Emulator does not support bluetooth
+        mBtAdapter=BluetoothAdapter.getDefaultAdapter();
+        if(mBtAdapter==null){
+            Toast.makeText(getApplicationContext(), "Bluetooth is not supported on this device!", Toast.LENGTH_SHORT).show();
+        } else{
+            mBtAdapter.enable();
+        }
 
-        mHandler=new Handler();
-
-        mMonitoringBTStatusReceiver = new MonitoringBluetoothStatus();
-
+        mMonitorBluetoothReceiver = new MonitorBluetoothReceiver();
         IntentFilter iFilter = new IntentFilter();
-        iFilter.addAction("edu.hkust.cse.phoneAdapter.stopService");
         if(mBtAdapter != null){
             if(mBtAdapter.isEnabled()){
                 iFilter.addAction(BluetoothDevice.ACTION_FOUND);
@@ -62,21 +62,11 @@ public class FailureManager extends IntentService {
                 iFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
             }
         }
-
-        registerReceiver(mMonitoringBTStatusReceiver, iFilter);
-
-
-        Intent mMonitoringEffectorsIntent =new Intent(this, MonitoringEffectorsStatus.class);
-        startService(mMonitoringEffectorsIntent);
-
-        //Simulating data
-        mSimulatingChanges = new SimulatingChanges();
-        IntentFilter iFilterSimulatior = new IntentFilter();
-        iFilterSimulatior.addAction("edu.hkust.cse.phoneAdapter.simulator");
-        registerReceiver(mSimulatingChanges,iFilterSimulatior);
-
+        registerReceiver(mMonitorBluetoothReceiver, iFilter);
 
         /**start foreground service**/
+        mBtDeviceList=new ArrayList<String>();
+
         // step 1: instantiate the notification
         int icon = R.drawable.icon;
         CharSequence tickerText = "FailureManager";
@@ -103,23 +93,43 @@ public class FailureManager extends IntentService {
          */
         Context c = this;
 
-        Intent iSimulator = new Intent();
-        iSimulator.setAction("edu.hkust.cse.phoneAdapter.simulator");
-        //i.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
-        sendBroadcast(iSimulator);
-
-
         int timeMonitoring = 10000;
         while (true) {
 
-            Log.i("Testando onHandleIntent FailureManager", "FailureManager" + Thread.currentThread().getName());
-            Log.i("Dados Failure", "mGpsAvailable: " + mGpsAvailable);
-            Log.i("Dados Failure", "mBtAvailable: " + mBtAvailable);
-            Log.i("Dados Failure", "mAudioAvailable: " + mAudioAvailable);
-            Log.i("Dados Failure", "mBtAvailable: " + mBtAvailable);
+            Log.i("Testing", "onHandleIntent FailureManager FailureManager" + Thread.currentThread().getName());
 
+            // Verify if gps service is available
+            LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+            mGpsAvailable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
+            //Bluetooth
+            mBtAvailable = mBtDeviceList.size() > 0;
 
+            //Verifying Audio e Vibration
+            try{
+                // Verify if it is possible to change volume
+                AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                int volume = mAudioManager.getStreamVolume(AudioManager.STREAM_RING);
+
+                if(volume>0){
+                    mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                    mAudioManager.setStreamVolume(AudioManager.STREAM_RING, volume, AudioManager.FLAG_SHOW_UI);
+                } else{
+                    mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, AudioManager.FLAG_SHOW_UI);
+                }
+                mAudioAvailable = volume >= 0;
+
+                if(!(mAudioManager.getMode() == AudioManager.VIBRATE_SETTING_ON)) {
+                    mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
+                    mvibrationAvailable = mAudioManager.getMode() == AudioManager.VIBRATE_SETTING_ON;
+                }else{
+                    mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
+                    mvibrationAvailable = mAudioManager.getMode() == AudioManager.VIBRATE_SETTING_OFF;
+                }
+            }catch(RuntimeException e){
+                mAudioAvailable = false;
+                mvibrationAvailable = false;
+            }
 
             Intent contextManagerIntent = new Intent();
             String sensorsAction = "edu.hkust.cse.phoneAdapter.sensorsFailure";
@@ -130,26 +140,19 @@ public class FailureManager extends IntentService {
                 contextManagerIntent.putExtra(ContextName.BT_AVAILABLE, mBtAvailable);
                 contextManagerIntent.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "NoBluetooth");
                 sendBroadcast(contextManagerIntent);
-
             }else if(!mGpsAvailable && mBtAvailable){
-
                 contextManagerIntent.setAction(sensorsAction);
                 contextManagerIntent.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
                 contextManagerIntent.putExtra(ContextName.BT_AVAILABLE, mBtAvailable);
                 contextManagerIntent.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "NoGPS");
                 sendBroadcast(contextManagerIntent);
-
             }
             else if(!mGpsAvailable && !mBtAvailable) {
-
-                Log.i("Dados Failure", "BOVESPA DERRETEU " + mBtAvailable);
-
-                Intent localIntent = new Intent(this, KnowledgeController.class);
-                localIntent.setAction("edu.hkust.cse.phoneAdapter.sensorsFailure");
-                localIntent.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
-                localIntent.putExtra(ContextName.BT_AVAILABLE, mBtAvailable);
-                localIntent.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "NoBluetoothNoGPS");
-                startService(localIntent);
+                contextManagerIntent.setAction(sensorsAction);
+                contextManagerIntent.putExtra(ContextName.GPS_AVAILABLE, mGpsAvailable);
+                contextManagerIntent.putExtra(ContextName.BT_AVAILABLE, mBtAvailable);
+                contextManagerIntent.putExtra(ContextName.CURRENT_CONTEXTMANAGER, "NoBluetoothNoGPS");
+                sendBroadcast(contextManagerIntent);
             }else{
 
                 contextManagerIntent.setAction(sensorsAction);
@@ -193,160 +196,72 @@ public class FailureManager extends IntentService {
             try{
                 Thread.sleep(timeMonitoring);
             } catch(Exception e){
-                Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
+                Log.e("error", "Thread sleep exception");
             }
         }
     }
 
-    protected class SimulatingChanges extends BroadcastReceiver{
+    public static boolean isRunning(){
+        return FailureManager.running;
+    }
 
-        public boolean flag = true;
+    private class MonitorBluetoothReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context c, Intent i) {
+
+            String action=i.getAction();
+            if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED)){
+                mBtDeviceList=new ArrayList<String>();
+            } else if( action.equals(BluetoothDevice.ACTION_FOUND)){
+                BluetoothDevice device=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if(!listContainsMac(mBtDeviceList, device.getAddress())){
+                    mBtDeviceList.add(device.getAddress());
+                }
+            } else if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)){
+
+            } else {
+
+            }
+
+        }
+    }
+
+    /**
+     * Check whether a specific MAC address is contained in a list.
+     * @param macList the list of MAC addresses
+     * @param mac the specific MAC
+     * @return true if the list contains the specific MAC, and false otherwise
+     */
+    private boolean listContainsMac(ArrayList<String> macList, String mac){
+        for(int i=0;i<macList.size();i++){
+            if(macList.get(i).equals(mac)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+    protected class RetrievingKnowledgeData extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if(intent.getAction().equals("edu.hkust.cse.phoneAdapter.simulator")){
-                while (true){
-                    Log.i("Testando onHandleIntent SimulatingChanges", "SimulatingChanges" + Thread.currentThread().getName());
-                    Log.i("Testando mGpsAvailable", "Value: " + mGpsAvailable);
-                    Log.i("Testando mBtAvailable", "Value: " + mBtAvailable);
-                    Log.i("Testando mvibrationAvailable", "Value: " + mvibrationAvailable);
-                    Log.i("Testando mAudioAvailable", "Value: " + mAudioAvailable);
+            if (intent.getAction().equals("edu.hkust.cse.phoneAdapter.knowledge")) {
+                mGpsAvailable = intent.getBooleanExtra(ContextName.GPS_AVAILABLE, false);
+                mBtAvailable = intent.getBooleanExtra(ContextName.BT_AVAILABLE, false);
+                // It is also possible other fields and values
+                mCurrentContextManager = intent.getStringExtra(ContextName.CURRENT_CONTEXTMANAGER);
 
-
-                    if(flag){
-                        mGpsAvailable = true;
-                        mBtAvailable = true;
-                        mvibrationAvailable = true;
-                        mAudioAvailable = true;
-                    }else{
-                        mGpsAvailable = false;
-                        mBtAvailable = false;
-                        mvibrationAvailable = false;
-                        mAudioAvailable = false;
-                    }
-
-                    flag = !flag;
-
-                    try{
-                        Thread.sleep(7000);
-                    } catch(Exception e){
-                        Log.e("edu.hkust.cse.phoneAdapter.error", "Thread sleep exception");
-                    }
-                }
+                mAudioAvailable = intent.getBooleanExtra(ContextName.AUDIO, false);
+                mvibrationAvailable = intent.getBooleanExtra(ContextName.VIBRATION, false);
+                // It is also possible other fields and values
+                mCurrentAdaptationManager = intent.getStringExtra(ContextName.CURRENT_ADAPTATIONMANAGER);
             }
-        }
-    }
 
 
-    /**
-     * The listener interface for receiving myLocation events.
-     * The class that is interested in processing a myLocation
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addMyLocationListener<code> method. When
-     * the myLocation event occurs, that object's appropriate
-     * method is invoked.
-     *
-     * @see MonitoringLocationStatus
-     */
-    private class MonitoringLocationStatus implements LocationListener {
-
-        @Override
-        public void onLocationChanged(Location loc) {
-            mGpsAvailable=true;
-        }
-
-        @Override
-        public void onProviderDisabled(String arg0) {
-            /* set mLocation to null, set last location to null and update last time to 0 */
-            mGpsAvailable=false;
-        }
-
-        @Override
-        public void onProviderEnabled(String arg0) {
-            mGpsAvailable=true;
-        }
-
-        @Override
-        public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 
         }
-    }
-
-    /**
-     * The Class MonitoringBluetoothStatus.
-     */
-    private class MonitoringBluetoothStatus extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context c, Intent i) {
-
-            mBtAdapter= BluetoothAdapter.getDefaultAdapter();
-            if(mBtAdapter==null){
-                Toast.makeText(getApplicationContext(), "Bluetooth is not supported on this device!", Toast.LENGTH_SHORT).show();
-                mBtAvailable = false;
-                return;
-            } else{
-                mBtAdapter.enable();
-            }
-
-            String action=i.getAction();
-            if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED)){
-
-            } else if( action.equals(BluetoothDevice.ACTION_FOUND)){
-                BluetoothDevice device=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                mBtAvailable = device != null;
-            } else if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
-
-            } else if(action.equals(BluetoothAdapter.ERROR) ||
-                    action.equals(BluetoothAdapter.STATE_OFF) ||
-                    action.equals(BluetoothAdapter.STATE_TURNING_OFF)){
-                mBtAvailable = false;
-            }
-            else {
-
-            }
-        }
-    }
-
-
-
-    /**
-     * The Class MonitoringEffectorsStatus.
-     */
-    private class MonitoringEffectorsStatus extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context c, Intent i) {
-
-            //dealing with audio
-            int currentVolume = -1;
-            AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            if(audio != null) {
-                currentVolume = audio.getStreamVolume(AudioManager.STREAM_RING);
-                if(currentVolume < 0){
-                    mAudioAvailable = false;
-                }
-                else
-                {
-                    mAudioAvailable = true;
-                }
-            }
-            else{
-                mAudioAvailable = false;
-            }
-
-            //dealing with vibration
-            Vibrator vibrator = (Vibrator)c.getSystemService(Context.VIBRATOR_SERVICE);
-            if (vibrator != null) {
-                mvibrationAvailable = true;
-            }
-            else
-            {
-                mvibrationAvailable = false;
-            }
-        }
-    }
-
+    }*/
 }
