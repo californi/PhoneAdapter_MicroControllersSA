@@ -98,12 +98,18 @@ public class FailureManager extends IntentService {
 
             Log.i("Testing", "onHandleIntent FailureManager FailureManager" + Thread.currentThread().getName());
 
-            // Verify if gps service is available
-            LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            mGpsAvailable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            try {
+                // Verify if gps service is available
+                LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+                mGpsAvailable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-            //Bluetooth
-            mBtAvailable = mBtDeviceList.size() > 0;
+                //Bluetooth
+                mBtAvailable = mBtAdapter.isEnabled();
+
+            }catch(RuntimeException e){
+                mGpsAvailable = false;
+                mBtAvailable = false;
+            }
 
             //Verifying Audio e Vibration
             try{
@@ -119,13 +125,8 @@ public class FailureManager extends IntentService {
                 }
                 mAudioAvailable = volume >= 0;
 
-                if(!(mAudioManager.getMode() == AudioManager.VIBRATE_SETTING_ON)) {
-                    mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
-                    mvibrationAvailable = mAudioManager.getMode() == AudioManager.VIBRATE_SETTING_ON;
-                }else{
-                    mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
-                    mvibrationAvailable = mAudioManager.getMode() == AudioManager.VIBRATE_SETTING_OFF;
-                }
+                mvibrationAvailable = mAudioManager.getMode() == AudioManager.VIBRATE_SETTING_ON;
+
             }catch(RuntimeException e){
                 mAudioAvailable = false;
                 mvibrationAvailable = false;

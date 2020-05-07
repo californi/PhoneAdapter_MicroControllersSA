@@ -4,26 +4,16 @@ import android.app.IntentService;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.media.AudioManager;
-import android.net.Uri;
-import android.os.Binder;
-import android.os.IBinder;
 import android.os.SystemClock;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-
 
 public class SimulatingChanges extends IntentService {
 
@@ -39,7 +29,7 @@ public class SimulatingChanges extends IntentService {
     private static String mCurrentAdaptationManager = "AllEffectors";
     private static boolean flag = true;
 
-    BluetoothAdapter mBtAdapterEmulator;
+    BluetoothAdapter mBtAdapter;
     AudioManager mAudioManager;
     Location loc;
     BluetoothReceiver mBluetoothReceiver;
@@ -47,125 +37,112 @@ public class SimulatingChanges extends IntentService {
     private String mRetrievedBTName;
 
     /*
-    * Creating methods for testing rules
-    * */
+     * Creating methods for testing rules
+     * */
     LocationManager locationManager;
 
     //General -> Office
-    private void activate_office_gps(double latitude, double longitude)  {
+    private void activate_gps(boolean active)  {
 
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
-        boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        locationManager.addTestProvider
+                (
+                        LocationManager.GPS_PROVIDER,
+                        "requiresNetwork" == "",
+                        "requiresSatellite" == "",
+                        "requiresCell" == "",
+                        "hasMonetaryCost" == "",
+                        "supportsAltitude" == "",
+                        "supportsSpeed" == "",
+                        "supportsBearing" == "",
 
-        if(gpsEnabled) {
+                        android.location.Criteria.POWER_LOW,
+                        android.location.Criteria.ACCURACY_FINE
+                );
 
-            locationManager.removeTestProvider(LocationManager.GPS_PROVIDER);
-            locationManager.addTestProvider
-                    (
-                            LocationManager.GPS_PROVIDER,
-                            "requiresNetwork" == "",
-                            "requiresSatellite" == "",
-                            "requiresCell" == "",
-                            "hasMonetaryCost" == "",
-                            "supportsAltitude" == "",
-                            "supportsSpeed" == "",
-                            "supportsBearing" == "",
+        locationManager.setTestProviderEnabled
+                (
+                        LocationManager.GPS_PROVIDER,
+                        active
+                );
 
-                            android.location.Criteria.POWER_LOW,
-                            android.location.Criteria.ACCURACY_FINE
-                    );
-
-            Location newLocation = new Location(LocationManager.GPS_PROVIDER);
-
-            newLocation.setLatitude(latitude);
-            newLocation.setLongitude(longitude);
-
-            newLocation.setAccuracy(500);
-
-            //locationManager.setTestProviderEnabled
-            //        (
-            //                LocationManager.GPS_PROVIDER,
-            //                true
-            //        );
-
-            locationManager.setTestProviderStatus
-                    (
-                            LocationManager.GPS_PROVIDER,
-                            LocationProvider.AVAILABLE,
-                            null,
-                            System.currentTimeMillis()
-                    );
-
-            locationManager.setTestProviderLocation
-                    (
-                            LocationManager.GPS_PROVIDER,
-                            newLocation
-                    );
-        }else{
-            Log.i("TestingLocationChange", "GPS is not enabled" + Thread.currentThread().getName());
-        }
-
+        locationManager.setTestProviderStatus
+                (
+                        LocationManager.GPS_PROVIDER,
+                        LocationProvider.AVAILABLE,
+                        null,
+                        System.currentTimeMillis()
+                );
     }
 
-    //General -> Office
-    private boolean activate_office_bt(String bluetoothAddress){
-        boolean result = false;
-        BluetoothAdapter mBtAdapter;
+    private void activate_office_gps(double latitude, double longitude){
+
+        Location newLocation = new Location(LocationManager.GPS_PROVIDER);
+        newLocation.setLatitude(latitude);
+        newLocation.setLongitude(longitude);
+        newLocation.setAccuracy(500);
+
+        locationManager.setTestProviderLocation
+                (
+                        LocationManager.GPS_PROVIDER,
+                        newLocation
+                );
+    }
+
+    private void activate_bt(boolean active){
         mBtAdapter=BluetoothAdapter.getDefaultAdapter();
         if(mBtAdapter==null){
             Toast.makeText(getApplicationContext(), "Bluetooth is not supported on this device!", Toast.LENGTH_SHORT).show();
-            return false;
         } else{
-            mBtAdapter.enable();
+            if(active)
+                mBtAdapter.enable();
+            else
+                mBtAdapter.disable();
         }
+    }
 
-        mRetrievedBTAddress = "";
-        mBluetoothReceiver = new BluetoothReceiver();
-        IntentFilter iFilter = new IntentFilter();
-        if(mBtAdapter != null){
-            if(mBtAdapter.isEnabled()){
-                iFilter.addAction(BluetoothDevice.ACTION_FOUND);
-                iFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-                iFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+    //General -> Office
+    private void activate_office_bt(String bluetoothAddress){
+
+        if(mBtAdapter.isEnabled()){
+
+            mRetrievedBTAddress = "";
+            mBluetoothReceiver = new BluetoothReceiver();
+            IntentFilter iFilter = new IntentFilter();
+            if(mBtAdapter != null){
+                if(mBtAdapter.isEnabled()){
+                    iFilter.addAction(BluetoothDevice.ACTION_FOUND);
+                    iFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+                    iFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+                }
             }
+
+            Log.i("BluetoothBRS", mRetrievedBTAddress);
+
+            registerReceiver(mBluetoothReceiver, iFilter);
+            while (!mRetrievedBTAddress.equals(bluetoothAddress)) {
+                Log.i("BluetoothBRS", "Testing - Waiting bluetooth value - currently: " +  mRetrievedBTName  + " - " + mRetrievedBTAddress);
+                Toast.makeText(getApplicationContext(), "Testing - Waiting bluetooth value!", Toast.LENGTH_SHORT).show();
+                SystemClock.sleep(1000);
+            }
+
+            unregisterReceiver(mBluetoothReceiver);
+
+            Log.i("BluetoothBRS", mRetrievedBTAddress);
         }
 
-        Log.i("BluetoothBRS", mRetrievedBTAddress);
-
-        registerReceiver(mBluetoothReceiver, iFilter);
-        while (!mRetrievedBTAddress.equals(bluetoothAddress)) {
-            Log.i("BluetoothBRS", "Testing - Waiting bluetooth value - currently: " +  mRetrievedBTName  + " - " + mRetrievedBTAddress);
-            Toast.makeText(getApplicationContext(), "Testing - Waiting bluetooth value!", Toast.LENGTH_SHORT).show();
-            SystemClock.sleep(1000);
-        }
-
-        result = true;
-        unregisterReceiver(mBluetoothReceiver);
-
-        Log.i("BluetoothBRS", mRetrievedBTAddress);
-        return result;
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
-        mAudioManager = (AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
-
-        Log.i("Testing", "Working on activate_office_gps " + Thread.currentThread().getName());
-
-        DeactivateGps();
+        activate_gps(true);
         activate_office_gps(-21.979769,-47.880300);
 
-        //ActivateGps();
-        //activate_office_gps(-21.979769,-47.880300);
+        activate_bt(true);
+        activate_office_bt("30:19:66:1D:36:D0");
 
-        Log.i("Testing", "Result in contextManagers: " + Thread.currentThread().getName());
-        boolean booActivateOfficeBt = activate_office_bt("30:19:66:1D:36:D0");
-        Log.i("Testing", "Result in booActivate_office_bt: " + booActivateOfficeBt + Thread.currentThread().getName());
-
-
-
+        mAudioManager = (AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
 
 
 
@@ -218,63 +195,12 @@ public class SimulatingChanges extends IntentService {
 
     }
 
-    public void ActivateGps (){
-        //mGpsAvailable
-        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        locationManager.setTestProviderEnabled(LocationManager.GPS_PROVIDER, true);
-        boolean mGpsAvailable1 = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        try {
-            Thread.sleep(3000);
-        } catch (Exception e) {
-            Log.e("error", "Thread sleep exception");
-        }
-        Log.i("Testing_GPS_ENABLED", "mGpsAvailable1: " +  mGpsAvailable1 + " - " + Thread.currentThread().getName());
-    }
-
-    public void DeactivateGps (){
-        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        locationManager.setTestProviderEnabled(LocationManager.GPS_PROVIDER, false);
-        boolean mGpsAvailable2 = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        try {
-            Thread.sleep(3000);
-        } catch (Exception e) {
-            Log.e("error", "Thread sleep exception");
-        }
-        Log.i("Testing_GPS_ENABLED", "mGpsAvailable2: " +  mGpsAvailable2 + " - " + Thread.currentThread().getName());
-    }
-
-    public void ActivateBt(){
-
-        mBtAdapterEmulator.enable();
-        mBtAdapterEmulator.isEnabled();
-        boolean mBtAvailable2 = mBtAdapterEmulator.isEnabled();
-        try {
-            Thread.sleep(3000);
-        } catch (Exception e) {
-            Log.e("error", "Thread sleep exception");
-        }
-        Log.i("Testing_BT_ENABLED", "mBtAvailable2: " +  mBtAvailable2 + " - " + Thread.currentThread().getName());
-    }
-
-    public void DeactivateBt (){
-        //mBtAvailable
-        mBtAdapterEmulator.disable();
-        boolean mBtAvailable1 = mBtAdapterEmulator.isEnabled();
-        try {
-            Thread.sleep(3000);
-        } catch (Exception e) {
-            Log.e("error", "Thread sleep exception");
-        }
-        Log.i("Testing_BT_DISABLED", "mBtAvailable1: " +  mBtAvailable1 + " - " + Thread.currentThread().getName());
-    }
 
     public void ActivateAudio (){
         //mAudioAvailable
         AudioManager mAudioManager = (AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
-        int intMode = 0;
         mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-        intMode = mAudioManager.getRingerMode();
+        int intMode = mAudioManager.getRingerMode();
         try {
             Thread.sleep(3000);
         } catch (Exception e) {
@@ -286,9 +212,8 @@ public class SimulatingChanges extends IntentService {
     public void DeactivateAudio(){
         //mAudioAvailable
 
-        int intMode = 0;
         mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-        intMode = mAudioManager.getRingerMode();
+        int intMode = mAudioManager.getRingerMode();
         try {
             Thread.sleep(3000);
         } catch (Exception e) {
@@ -306,12 +231,6 @@ public class SimulatingChanges extends IntentService {
             Log.e("error", "Thread sleep exception");
         }
         Log.i("Testing", "VIBRATE_SETTING_ON: intMode: " +  intMode + " - " + Thread.currentThread().getName());
-
-        try {
-            Thread.sleep(7000);
-        } catch (Exception e) {
-            Log.e("error", "Thread sleep exception");
-        }
     }
 
     public void DeactivateVibrate (){
@@ -329,7 +248,7 @@ public class SimulatingChanges extends IntentService {
     /**
      * The Class MyBroadcastReceiver.
      */
-    private class BluetoothReceiver extends BroadcastReceiver{
+    private class BluetoothReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context c, Intent i) {
@@ -357,6 +276,4 @@ public class SimulatingChanges extends IntentService {
     {
 
     }
-
-
 }
