@@ -6,20 +6,15 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="TestingLocationChange" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="info" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bcea142f-8f31-4816-a896-e12ad1b4c8a4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/hkust/cse/phoneAdapter/context/FailureManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/hkust/cse/phoneAdapter/context/FailureManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/hkust/cse/phoneAdapter/context/SimulatingChanges.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/hkust/cse/phoneAdapter/context/SimulatingChanges.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/hkust/cse/phoneAdapter/context/KnowledgeBroadcastReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/hkust/cse/phoneAdapter/context/KnowledgeBroadcastReceiver.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

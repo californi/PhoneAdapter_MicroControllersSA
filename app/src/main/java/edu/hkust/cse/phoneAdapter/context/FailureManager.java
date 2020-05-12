@@ -133,7 +133,7 @@ public class FailureManager extends IntentService {
             }
 
             Intent contextManagerIntent = new Intent();
-            String sensorsAction = "edu.hkust.cse.phoneAdapter.sensorsFailure";
+            String sensorsAction = "edu.hkust.cse.phoneAdapter.KnowledgeSensorsFailure";
             //Regarding to ContextManagers
             if(mGpsAvailable && !mBtAvailable) {
                 contextManagerIntent.setAction(sensorsAction);
@@ -164,7 +164,7 @@ public class FailureManager extends IntentService {
             }
 
             Intent adaptationManagerIntent = new Intent();
-            String effectorsAction = "edu.hkust.cse.phoneAdapter.effectorsFailure";
+            String effectorsAction = "edu.hkust.cse.phoneAdapter.KnowledgeEffectorsFailure";
             //Regarding to AdaptationManagers
             if(mAudioAvailable && !mvibrationAvailable) {
                 adaptationManagerIntent.setAction(effectorsAction);
